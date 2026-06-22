@@ -1,0 +1,86 @@
+{
+  "schema_version": "activation_rag.activation_feature_catalog.v1",
+  "description": "Proxy semantic catalog for corrected section-prefill activation summaries. This maps current act:{site}:{window}:{stat} cache rows into interpretable diagnostic groups while the longmem SAE-ID causal subset artifact is unavailable over vicuna SSH.",
+  "counterfactual_group_count": 4,
+  "counterfactual_group_size": 16,
+  "counterfactual_seed": 13,
+  "features": [
+    {
+      "feature_pattern": "act:emv2_p45_attn_out:*:*",
+      "semantic_label": "middle_layer_semantic_proxy",
+      "categories": ["semantic_content"],
+      "polarity": "mixed",
+      "causal_confidence": "proxy"
+    },
+    {
+      "feature_pattern": "act:emv2_p55_attn_out:*:*",
+      "semantic_label": "middle_layer_semantic_proxy",
+      "categories": ["semantic_content"],
+      "polarity": "mixed",
+      "causal_confidence": "proxy"
+    },
+    {
+      "feature_pattern": "act:emv2_p65_attn_out:*:*",
+      "semantic_label": "middle_late_answer_evidence_proxy",
+      "categories": ["evidence"],
+      "polarity": "positive",
+      "causal_confidence": "proxy"
+    },
+    {
+      "feature_pattern": "act:emv2_p75_attn_out:*:*",
+      "semantic_label": "late_answer_format_proxy",
+      "categories": ["answer_format"],
+      "polarity": "mixed",
+      "causal_confidence": "proxy"
+    },
+    {
+      "feature_pattern": "act:*:prefill_last:*",
+      "semantic_label": "prefill_last_signature",
+      "categories": ["prefill_endpoint"],
+      "polarity": "mixed",
+      "causal_confidence": "proxy"
+    },
+    {
+      "feature_pattern": "act:*:post50_mean:*",
+      "semantic_label": "prefill_context_average",
+      "categories": ["prefill_context"],
+      "polarity": "mixed",
+      "causal_confidence": "proxy"
+    },
+    {
+      "feature_pattern": "act:*:*:mean",
+      "semantic_label": "signed_mean_activation",
+      "categories": ["scalar_moment"],
+      "polarity": "mixed",
+      "causal_confidence": "proxy"
+    },
+    {
+      "feature_pattern": "act:*:*:rms",
+      "semantic_label": "activation_energy",
+      "categories": ["scalar_moment"],
+      "polarity": "positive",
+      "causal_confidence": "proxy"
+    },
+    {
+      "feature_pattern": "act:*:*:mean_abs",
+      "semantic_label": "absolute_activation_mass",
+      "categories": ["scalar_moment"],
+      "polarity": "positive",
+      "causal_confidence": "proxy"
+    },
+    {
+      "feature_pattern": "act:*:*:chunk_*",
+      "semantic_label": "chunk_bin_trajectory",
+      "categories": ["trajectory"],
+      "polarity": "mixed",
+      "causal_confidence": "proxy"
+    },
+    {
+      "feature_pattern": "act:*:*:max_abs",
+      "semantic_label": "max_activation_outlier",
+      "categories": ["rogue_dimension_risk"],
+      "polarity": "mixed",
+      "causal_confidence": "negative_control"
+    }
+  ]
+}

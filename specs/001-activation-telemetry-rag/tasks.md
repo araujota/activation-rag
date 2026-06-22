@@ -1,0 +1,146 @@
+# Tasks: Activation Telemetry RAG
+
+- [x] T001 Create standalone repository at `/Users/tyleraraujo/activation-rag`.
+- [x] T002 Add Spec Kit-style constitution, prompts, templates, spec, research, plan, data model, and contracts.
+- [x] T003 Add Python project metadata in `pyproject.toml`.
+- [x] T004 Write failing unit tests in `tests/test_chunking.py`, `tests/test_telemetry.py`, and `tests/test_retrieval.py`.
+- [x] T005 Implement schema dataclasses in `src/activation_rag/schema.py`.
+- [x] T006 Implement stable chunking in `src/activation_rag/chunking.py`.
+- [x] T007 Implement deterministic embedding provider in `src/activation_rag/embedding.py`.
+- [x] T008 Implement selector-compatible telemetry provider in `src/activation_rag/telemetry.py`.
+- [x] T009 Implement dense and activation similarity retrieval in `src/activation_rag/retrieval.py`.
+- [x] T010 Implement orchestration in `src/activation_rag/pipeline.py`.
+- [x] T011 Add quickstart in `quickstart.py`.
+- [x] T012 Run `python -m unittest discover -s tests` and update docs if behavior differs from the spec.
+- [x] T013 Document failure modes for dimensionality/layer selection, contextual drift, hubness, data scarcity, supervision targets, and prompt canonicalization in `spec.md`, `research.md`, `plan.md`, `data-model.md`, and `contracts/activation-record.schema.json`.
+- [x] T014 Add schema/code fields for `layer_selection_policy`, `prompt_template_id`, `prompt_template_hash`, and `normalization_policy` before adding any real telemetry provider.
+- [x] T015 Add future answer-seeker dataset contract and tests before training any MLP mapper.
+- [x] T016 Add activation-space KNN alias and comparison surface in `src/activation_rag/pipeline.py`.
+- [x] T017 Add dense-first activation-similarity reranking in `src/activation_rag/retrieval.py` and `src/activation_rag/pipeline.py`.
+- [x] T018 Add tests for activation reranking and dense/activation comparison in `tests/test_retrieval.py`.
+- [x] T019 Add an example comparison script that prints dense, activation-KNN, and activation-reranked chunks.
+- [x] T020 Add benchmark metrics and fixture evaluation tests in `tests/test_benchmarks.py`.
+- [x] T021 Implement benchmark records, metrics, and approach evaluator in `src/activation_rag/benchmarks.py`.
+- [x] T022 Add dataset download/preparation script in `scripts/download_benchmarks.py`.
+- [x] T023 Add benchmark runner script in `scripts/run_benchmark.py`.
+- [x] T024 Run fixture benchmark locally and record observed results.
+- [x] T025 Add failing tests for a non-mock command/file-backed prefill telemetry provider in `tests/test_telemetry.py`.
+- [x] T026 Implement sidecar-compatible real prefill telemetry adaptation in `src/activation_rag/telemetry.py`.
+- [x] T027 Guard non-fixture benchmark runs against mock telemetry in `scripts/run_benchmark.py`.
+- [x] T028 Document the real telemetry capture path and rerun tests.
+- [ ] T029 Install and wire full-corpus loaders for MS MARCO via `ir_datasets`, BEIR zip conversion, and HotpotQA fullwiki via Hugging Face `datasets`.
+- [ ] T030 Run full benchmark jobs with persistent manifests and compare metrics under benchmark-standard conditions.
+- [x] T031 Formalize the activation retrieval ablation research addendum in `specs/001-activation-telemetry-rag/research-addendum-activation-ablation.md`.
+- [x] T032 Add an offline ablation harness that evaluates capture hygiene, pooling, geometry/hubness, layer/site/feature selection, and dense integration variants against a frozen cache.
+- [x] T033 Run the ablation harness against the SciFact real-prefill cache and persist the report under `runs/activation-ablation/`.
+- [x] T034 Audit raw sidecar manifests for prompt-section labels and record whether corrected recapture is mandatory before further benchmark claims.
+- [x] T035 Synthesize the next architectural direction only after T033 and T034 are complete.
+- [x] T036 Patch strict prefill capture to persist semantic section labels and summarize only filtered prompt-prefill raw manifest rows.
+- [x] T037 Patch and restart the sidecar zero-token prefill path so strict prefill requests label the final prompt token as `prompt` instead of `assistant_response`.
+- [x] T038 Re-ingest SciFact through the corrected section-prefill capture pipeline into a fresh telemetry cache.
+- [x] T039 Rerun the activation ablation harness against the corrected section-prefill SciFact cache and persist the report under `runs/activation-ablation/`.
+- [x] T040 Add first-class activation matching strategies for anisotropic spaces in `src/activation_rag/retrieval.py` and supporting modules: CSLS-style local scaling, NICDM-style local scaling, whitening plus L2, top-PC removal, and per-site late fusion.
+- [x] T041 Add tests in `tests/test_retrieval.py` proving the new activation matching strategies are explicit opt-ins and preserve the raw cosine default.
+- [x] T042 Wire benchmark and CLI selection for activation matching strategies without changing the default dense, activation-only, or dense-first rerank behavior.
+- [x] T043 Update the activation retrieval research addendum with corrected-cache ablation results and matcher promotion criteria.
+- [x] T044 Add a supervised activation reranker/projection training-data contract and preparation script skeleton before training any projection model.
+- [x] T045 Add a supervised activation reranking research addendum covering cross-encoder baselines, pairwise/listwise losses, dense hard negatives, false-negative controls, and the MLP answer-span fallback criterion.
+- [x] T046 Add query-group training data preparation for dense-candidate activation-aware reranking with explicit positive, explicit-negative, and mined-hard-negative provenance.
+- [x] T047 Add a supervised activation-aware pairwise reranker trainer and evaluator over frozen dense candidate pools.
+- [x] T048 Add a normal text reranker baseline runner over the exact same dense candidate groups.
+- [x] T049 Capture train/dev query prefill activations before any valid supervised SciFact training run.
+- [x] T050 Launch the first supervised activation-aware reranking run and compare it against dense-only plus normal text reranking.
+- [x] T051 Run a stronger text reranker baseline over the same SciFact dense candidate groups and persist metrics/scores.
+- [x] T052 Add best-dev checkpoint selection to the activation MLP trainer so reported test metrics use the dev-selected epoch.
+- [x] T053 Run a dev-selected activation reranker sweep over dense-only, activation-only, dense+aggregate activation, dense+site activation, and all-feature variants.
+- [x] T054 Update the supervised reranking addendum with stronger text-reranker and dev-selected activation reranker results before choosing the next research direction.
+- [x] T055 Add paired per-query significance and changed-query audit utilities for dense, text-reranker, and activation-reranker comparisons.
+- [x] T056 Run the SciFact paired audit for dense versus best activation reranker, dense versus strongest text reranker, and activation versus strongest text reranker.
+- [ ] T057 Repeat the frozen-candidate supervised activation comparison on at least one additional small BEIR dataset before escalating to answer-representation prediction.
+- [x] T058 Update the supervised reranking addendum with paired audit results and cross-BEIR repeat status.
+- [x] T059 Add a semantic activation feature catalog adapter that can consume longmem selector SAE feature manifests/status rows and local `act:{site}:{window}:{stat}` pattern catalogs.
+- [x] T060 Add catalog-aware supervised candidate features for semantic activation groups, including cosine, distance, product, and mass diagnostics.
+- [x] T061 Add counterfactual catalog support for shuffled/random feature groups so semantic activation gains can be compared against non-semantic controls.
+- [ ] T062 Run a diagnostic semantic activation reranking sweep on SciFact and, once vicuna is reachable, repeat on additional BEIR datasets before moving to answer-bearing activation prediction.
+- [x] T063 Materialize the true vicuna/longmem labeled SAE subset and inspect its runtime selector-row schema before treating semantic catalog results as causal.
+- [x] T064 Fix the semantic feature catalog adapter so longmem manifests match both raw selector SAE IDs and `sae.feature.{id}` aliases.
+- [x] T065 Add a dedicated Qwen/RMT/SAE prefill capture wrapper for the longmem core245 selected-feature path.
+- [x] T066 Record the ordered longmem core245 capture permutation plan and promotion gates.
+- [x] T067 Restore CUDA availability on `vicuna-host` before launching Qwen/RMT/SAE recapture.
+- [x] T068 Run a two-row Qwen/RMT/SAE smoke capture, then recapture SciFact train/test document chunks and queries through `qwen_l07_core245_raw_max`.
+- [x] T069 Run supervised reranker ablations for raw selected SAE IDs, log1p/L2, causal category aggregates, high-effect top-K, DF-filtered IDs, and matched counterfactual groups.
+- [x] T070 Run hubness-isolation diagnostics separating matcher-only features, semantic aggregates, matched counterfactual aggregates, and activation-only anisotropic matchers.
+- [x] T071 Train and evaluate an answer-bearing activation representation predictor over frozen SciFact dense candidates, using contrastive/listwise positives and dense hard negatives.
+- [x] T072 Add reusable cross-BEIR dense-candidate, group telemetry capture, remote text-reranker, and dense/act-pred blend-sweep utilities.
+- [x] T073 Repeat the exact answer-representation predictor protocol on NFCorpus with dense-only, dense+Ettin, and dense+activation-prediction baselines.
+- [x] T074 Repeat the exact answer-representation predictor protocol on FiQA with dense-only, dense+Ettin, dense+activation-prediction, and blend-weight sweeps.
+- [x] T075 Run leakage and memorization controls for the completed cross-BEIR repeats before interpreting any activation-predictor gains.
+- [x] T076 Design and train a train-only meta-BEIR activation-prediction model with dataset-balanced sampling, activation-space geometry controls, and a locked heldout validation manifest that is not executed.
+- [x] T077 Capture train-side qrel-positive groups and real Qwen/RMT/SAE Core245 telemetry for additional BEIR train-split datasets, starting with Quora split audit and recording storage blockers for larger train corpora.
+- [x] T078 Train the full train-side activation representation MLP on vicuna using dense-negative datasets plus qrel-positive FEVER/HotpotQA captures without executing heldout validation.
+- [x] T079 Run locked heldout comparative BEIR benchmarks for pure dense candidates, dense candidates plus Ettin, dense candidates plus full-train activation-prediction reranking, and pure activation-prediction retrieval over the available activation index.
+- [x] T080 Update the supervised reranking design to replace the universal activation reranker promotion path with dataset-specific learned blended rerankers for SciFact, NFCorpus, and FiQA.
+- [x] T081 Add an interpretable learned blended reranker trainer that optimizes query-group ranking over dense score/rank plus answer-bearing activation-prediction score features.
+- [x] T082 Generate train/dev/test answer-prediction score files for each dataset-specific blended reranker from the fixed full-train activation-prediction artifact.
+- [x] T083 Train SciFact, NFCorpus, and FiQA dataset-specific learned blended rerankers using train-only supervision and dev-only model/weight selection.
+- [x] T084 Evaluate selected learned blended rerankers on heldout test against pure dense and dense+Ettin with paired query-level significance and changed-query audits.
+- [x] T085 Record dataset-specific learned blended reranker results, learned weights, failure modes, and publishability implications in the supervised reranking addendum.
+- [x] T086 Add a direct-blend activation-prediction trainer that optimizes final dense-plus-activation listwise ranking loss instead of training actpred as a standalone score.
+- [x] T087 Train direct-blend activation-aware rerankers for SciFact, NFCorpus, and FiQA with dev-selected alpha/model checkpoints.
+- [x] T088 Evaluate direct-blend rerankers against pure dense, raw Ettin, current constrained-alpha activation blend, and stronger dense+Ettin blend-best where available.
+- [x] T089 Record direct-blend results, absolute deltas, and next-step decision in the supervised reranking addendum.
+- [x] T090 Add TechQA-RAG-Eval preparation as a chunk-level documentation retrieval benchmark over answerable linked Technotes.
+- [x] T091 Prepare TechQA-RAG-Eval dense candidate groups with the same BGE embedding model used for the BEIR comparisons.
+- [x] T092 Capture Qwen/RMT/SAE Core245 prefill telemetry for the TechQA query/candidate union through the zero-token prefill path.
+- [x] T093 Run dense+Ettin over the TechQA frozen dense candidate groups.
+- [x] T094 Apply the SciFact-trained direct-blend activation-prediction reranker to TechQA and compare against dense and dense+Ettin.
+- [x] T095 Record TechQA transfer results, label construction caveats, and whether a TechQA-specific actpred MLP is warranted.
+- [ ] T096 Research and prepare a legal vertical benchmark adapter, prioritizing MLEB and LegalBench-RAG where the task is precise legal snippet/document retrieval.
+- [ ] T097 Research and prepare a biomedical vertical benchmark adapter for R2MED, preserving its reasoning-driven medical retrieval task structure.
+- [ ] T098 Research and prepare a coding vertical benchmark adapter for CoREB, preserving its retrieval plus reranking setup and graded relevance labels.
+- [x] T099 Add a reusable vertical benchmark group preparer for HF retrieval datasets and HF/MTEB reranking datasets, with deterministic query-level train/dev/test splits when native train/dev splits are unavailable.
+- [x] T100 Prepare MLEB legal RAG train/dev/test candidate groups from `isaacus/mleb-legal-rag-bench`, preserving passage IDs as retrieval units.
+- [x] T101 Prepare R2MED train/dev/test candidate groups from the MTEB-compatible R2MED retrieval datasets, starting with a manageable diagnostic subset before escalating to all eight R2MED tasks.
+- [x] T102 Prepare CoREB train/dev/test reranking groups from the native CoREB reranking candidate lists, combining text-to-code, code-to-text, and code-to-code only after per-task schema validation.
+- [x] T103 Capture Qwen/RMT/SAE Core245 telemetry for the vertical train/dev candidate unions through the strict zero-token prefill path.
+- [x] T104 Train separate direct-blend answer-activation rerankers for MLEB/legal, R2MED/medical, and CoREB/code using train-only supervision and dev-only alpha/checkpoint selection.
+- [x] T105 Record vertical-specific reranker results, transfer caveats, and whether the signal appears strongest on high-structure expert prose.
+- [x] T106 Add per-query candidate movement auditing for dense-vs-activation reranker arms and run it on the harmed legal and medical vertical outputs.
+- [x] T107 Research larger same-shaped vertical datasets and confirm LegalBench-RAG, all R2MED tasks, and CoIR are the next scale-up sources.
+- [x] T108 Add a LegalBench-RAG span-window adapter that converts exact ground-truth snippets into query-to-evidence-passage groups with dense candidates and appended positives.
+- [x] T109 Prepare larger legal train/dev/test groups from LegalBench-RAG and merge or compare them against the existing MLEB legal groups without leaking query IDs across splits.
+- [x] T110 Prepare all eight R2MED task groups and combine them into a medical vertical pool with per-task source labels preserved for reporting.
+- [x] T111 Replace the saturated CoREB diagnostic with a CoIR/MTEB code retrieval adapter or task preset where candidate generation is a real retrieval problem rather than already-perfect native reranking.
+- [x] T112 Add direct-blend regularization controls: dropout, input noise, label smoothing, gradient clipping, and patience-based early stopping.
+- [x] T113 Add cross-fitted direct-blend score generation over train groups so calibration and audits can use out-of-fold activation scores rather than in-sample scores.
+- [x] T114 Capture Qwen/RMT/SAE Core245 telemetry for the scaled legal, pooled medical, and code retrieval candidate unions.
+- [ ] T115 Retrain regularized, dataset-specific direct-blend answer-activation rerankers on the scaled vertical pools and compare absolute delta against dense-only and dense+Ettin.
+- [x] T116 Record scaled vertical results, per-source breakdowns, cross-fitted calibration behavior, and candidate movement diagnoses in the supervised reranking addendum.
+- [x] T117 Add STREAM/Sparse-Latents RAG literature guidance to the supervised reranking addendum, separating long-context sparse tracing ideas from SAE latent behavior-control ideas.
+- [ ] T118 If scaled reranking fails, prototype a behavior-latent diagnostic objective: classify context-following versus memory/near-topic distraction from final-input-token SAE telemetry before trying another retrieval scorer.
+- [x] T119 Audit the actual labeled Core245 SAE/CAA telemetry shape, including whether current/baseline CAA fields are populated in the RAG prefill caches.
+- [x] T120 Run named-feature signal diagnostics and subset direct-blend ablations for LegalBench-RAG, R2MED, and CoIR/CosQA to separate useful, noisy, and interaction-dependent SAE signals.
+- [x] T121 Explicitly document the current scaled results as SAE-only Core245 activation-aware reranking rather than full CAA/SAE selector-primitive reranking.
+- [x] T122 Prototype a strict zero-token CAA/EM smoke scorer that reads compact `final_em_v2_features` or raw activation captures, loads the production 8-head learned bundle plus neutral baseline, and emits selector-compatible current/baseline/delta/headroom fields.
+- [x] T123 Run the CAA/EM smoke scorer on SciFact and a LegalBench-RAG pilot sample; verify strict zero-token behavior, prompt-section provenance, request-id matching, and cache/resume behavior.
+- [x] T124 Train and evaluate the gated CAA/EM pilot arms: SAE-only Core245 reproduction, CAA8-only, SAE+CAA8, CAA8 aggregate derivatives, and matched shuffled controls.
+- [x] T125 Promote full recapture only if the pilot beats the current SAE-only artifact on dev and preserves locked dense plus Ettin baselines; otherwise freeze the publishable claim as SAE-only SciFact plus narrow LegalBench-RAG.
+- [ ] T126 Before any future CAA/EM reranking run, require a variance gate proving strict-prefill CAA inputs and current/baseline/delta fields are content-sensitive across a candidate-union sample.
+- [x] T127 Run dense plus Ettin on the LegalBench-RAG locked test candidate groups, compare against the scaled actpred direct-blend reranker, and record paired significance plus changed-query movement in the supervised reranking addendum.
+- [x] T128 Add and run a deep activation-reranker diagnostic comparing SciFact, LegalBench-RAG, R2MED, and CoIR/CosQA on candidate hardness, positive-vs-negative score separation, source/span overlap, query/passage shape, training generalization gaps, and semantic changed-query examples.
+- [x] T129 Design a query-plus-candidate behavior-latent objective that captures canonical Q+candidate support prompts and distinguishes the available max-prefill Core245 telemetry from the desired future final-token SAE/CAA telemetry.
+- [x] T130 Implement behavior-latent pilot preparation, cache materialization, training, and comparison scripts with unit coverage.
+- [x] T131 Capture pair-prompt Core245 telemetry for SciFact, LegalBench-RAG, and R2MED pilot subsets.
+- [x] T132 Train and evaluate mixed-general and dataset-specific behavior-latent support rerankers on the pilot subsets against dense, actpred blend, and Ettin where available.
+- [x] T133 Record behavior-latent pilot results, limitations, and whether the objective is worth a true final-token telemetry implementation.
+- [x] T134 Run a sanity and optimization research pass for query+candidate behavior-latent training corpora, losses, candidate selection, alpha calibration, and leakage controls.
+- [x] T135 Prepare larger full-split behavior-pair candidate groups for SciFact, LegalBench-RAG, and R2MED with richer dense-hard-negative slates while preserving heldout test isolation.
+- [x] T136 Capture and materialize the larger full-split query+candidate Core245 pair-prompt telemetry cache with resume-safe artifacts.
+- [x] T137 Train stronger general and benchmark-specific behavior-latent rerankers with dev-selected alpha, feature-transform ablations, and behavior-only diagnostics.
+- [x] T138 Evaluate the stronger behavior-latent artifacts against dense, existing actpred blend, and Ettin where available, with paired significance and changed-query movement recorded in the supervised reranking addendum.
+- [x] T139 Extend the leakage auditor for normalized text and near-duplicate checks, create strict no-train/dev-positive-overlap heldout subsets for SciFact, LegalBench-RAG, and R2MED, rerun behavior-latent comparisons on those subsets, and record the revised claim in the report and research addendum.
+- [x] T140 Run an expanded off-the-shelf text-reranker baseline envelope over the same frozen dense candidate groups for SciFact, LegalBench-RAG, and R2MED, including Ettin, BGE v2-m3, GTE ModernBERT, Qwen3 0.6B seq-cls, and Mixedbread base-v2, then record full and strict-split results in the report and research addendum.
+- [x] T141 Prepare GitHub and Hugging Face publishing materials for the primary behavior-latent MLP, including a publication-grade README, model card, publishing checklist, MIT license, and lightweight release bundle with checksums.
+- [x] T142 Add a reusable behavior-latent checkpoint scoring utility and run a CoIR/CoSQA coding retrieval spot check comparing dense, dense plus Ettin, and dense plus behavior-prefill reranking over the same frozen dense candidates.
+- [x] T143 Update the main experiment report with the CoIR/CoSQA coding retrieval transfer result, including protocol, paired significance, interpretation, and production-relevance caveats.
+- [x] T144 Run a fuller CoIR coding retrieval suite with no document-prefill ingestion: prepare or reuse dense candidate groups, run Ettin reranking, run behavior-prefill reranking through the query+candidate adapter, and record paired results per task.

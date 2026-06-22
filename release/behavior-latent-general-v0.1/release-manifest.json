@@ -1,0 +1,123 @@
+{
+  "schema_version": "activation_rag.behavior_latent_release_manifest.v1",
+  "release_id": "behavior-latent-general-v0.1",
+  "created_date": "2026-06-21",
+  "primary_checkpoint": {
+    "path": "model.pt",
+    "source_path": "runs/behavior-latent-robust-20260618/general-log1p-l2/model.pt",
+    "sha256": "2de017e5387697f6156786f43a1bfc4a97392941cb515c59e1edd49e632f2f36",
+    "size_bytes": 204861
+  },
+  "model": {
+    "schema_version": "activation_rag.behavior_latent_support_reranker.v1",
+    "dataset_name": "general-log1p-l2-robust",
+    "input_dim": 248,
+    "hidden_dim": 128,
+    "activation_transform": "log1p_l2",
+    "prompt_representation": "query_candidate_pair_core245_max_prefill",
+    "feature_set_id": "core245_corrected_longmem_query_conditioned_train_dev",
+    "selected_alpha": 1.0,
+    "selected_epoch": 6
+  },
+  "telemetry": {
+    "telemetry_model": "qwen3-4b-rmt-sae",
+    "site": "qwen.model.layers.7.resid_pre",
+    "feature_count": 245,
+    "capture_phase": "zero-token prefill",
+    "aggregation": "max over prompt tokens",
+    "important_limitation": "SAE-only Core245 max-prefill telemetry; not full final-token CAA/SAE selector telemetry"
+  },
+  "files": [
+    {
+      "path": "model.pt",
+      "sha256": "2de017e5387697f6156786f43a1bfc4a97392941cb515c59e1edd49e632f2f36"
+    },
+    {
+      "path": "training-metrics.json",
+      "source_path": "runs/behavior-latent-robust-20260618/general-log1p-l2/metrics.json",
+      "sha256": "ecaa5e90ac39bc53d8cf8becdbbf04e4ffec2b6fc513446460252111ee04d2e7"
+    },
+    {
+      "path": "expanded-text-reranker-comparison.json",
+      "source_path": "runs/text-reranker-expanded-20260621/expanded-text-reranker-comparison.json",
+      "sha256": "e919f987199574951d9348b4e3aa65ab9728464c3e660dec45923a2ddd061161"
+    }
+  ],
+  "primary_results": {
+    "legalbenchrag_strict": {
+      "dense_ndcg_at_10": 0.2654881276816939,
+      "best_text_ndcg_at_10": 0.5177697770693818,
+      "behavior_ndcg_at_10": 0.7436818148405017,
+      "behavior_minus_best_text_ndcg_at_10": 0.2259120377711199,
+      "paired_p_value": 0.00009999000099990002
+    },
+    "r2med_strict": {
+      "dense_ndcg_at_10": 0.18618648740057955,
+      "best_text_ndcg_at_10": 0.4751587410671494,
+      "behavior_ndcg_at_10": 0.8526802845107041,
+      "behavior_minus_best_text_ndcg_at_10": 0.3775215434435547,
+      "paired_p_value": 0.00009999000099990002
+    },
+    "scifact_strict": {
+      "dense_ndcg_at_10": 0.7625986516421763,
+      "best_text_ndcg_at_10": 0.8476852166084833,
+      "behavior_ndcg_at_10": 0.7960314224025734,
+      "behavior_minus_best_text_ndcg_at_10": -0.051653794205909875,
+      "interpretation": "supportive but not primary"
+    }
+  },
+  "zero_shot_transfer_results": {
+    "coir_coding_bounded_suite": {
+      "candidate_count_per_query": 16,
+      "coding_specific_training": false,
+      "important_caveat": "APPS used qrel-positive appending when dense retrieval missed the positive; this is final-stage reranking evidence, not standalone first-stage retrieval evidence.",
+      "tasks": {
+        "cosqa": {
+          "queries": 500,
+          "dense_ndcg_at_10": 0.3258,
+          "ettin_ndcg_at_10": 0.4447,
+          "behavior_ndcg_at_10": 0.5277,
+          "behavior_minus_ettin_ndcg_at_10": 0.083
+        },
+        "codetrans_dl": {
+          "queries": 180,
+          "dense_ndcg_at_10": 0.2123,
+          "ettin_ndcg_at_10": 0.3587,
+          "behavior_ndcg_at_10": 0.3337,
+          "behavior_minus_ettin_ndcg_at_10": -0.0251
+        },
+        "codetrans_contest": {
+          "queries": 221,
+          "dense_ndcg_at_10": 0.9095,
+          "ettin_ndcg_at_10": 0.977,
+          "behavior_ndcg_at_10": 0.8664,
+          "behavior_minus_ettin_ndcg_at_10": -0.1106
+        },
+        "stackoverflow_qa": {
+          "queries": 1994,
+          "dense_ndcg_at_10": 0.7993,
+          "ettin_ndcg_at_10": 0.9156,
+          "behavior_ndcg_at_10": 0.7685,
+          "behavior_minus_ettin_ndcg_at_10": -0.1471
+        },
+        "apps": {
+          "queries": 3765,
+          "dense_ndcg_at_10": 0.0572,
+          "ettin_ndcg_at_10": 0.6418,
+          "behavior_ndcg_at_10": 0.9339,
+          "behavior_minus_ettin_ndcg_at_10": 0.2921
+        }
+      },
+      "macro_ndcg_at_10": {
+        "dense": 0.4608,
+        "ettin": 0.6676,
+        "behavior": 0.6861
+      },
+      "query_weighted_ndcg_at_10": {
+        "dense": 0.332,
+        "ettin": 0.7125,
+        "behavior": 0.8354
+      }
+    }
+  }
+}

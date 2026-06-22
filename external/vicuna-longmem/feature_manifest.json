@@ -1,0 +1,4088 @@
+{
+  "artifact_id": "rmt-span-selector-core245_corrected_longmem_query_conditioned_train_dev",
+  "feature_order": [
+    "bias",
+    "span.token_length_log",
+    "span.token_age_log",
+    "memory.pressure_ratio",
+    "memory.free_ratio",
+    "query.available",
+    "query.token_overlap_log",
+    "query.token_coverage",
+    "query.token_jaccard",
+    "query.bigram_overlap_log",
+    "query.bigram_jaccard",
+    "em.available",
+    "em.delta_neutral_l2",
+    "em.delta_current_l2",
+    "em.incremental_efficiency",
+    "sae.available",
+    "sae.active_count",
+    "sae.total_mass",
+    "sae.max_value",
+    "sae.novelty_mass",
+    "sae.max_overlap",
+    "saeagg.causal_weighted_mass",
+    "saeagg.causal_weighted_max",
+    "source.ruler",
+    "source.longmem",
+    "source.unknown",
+    "saeagg.category.entity_domain.active_count",
+    "saeagg.category.entity_domain.total_mass",
+    "saeagg.category.entity_domain.max_value",
+    "saeagg.category.entity_domain.causal_weighted_mass",
+    "saeagg.category.event_action.active_count",
+    "saeagg.category.event_action.total_mass",
+    "saeagg.category.event_action.max_value",
+    "saeagg.category.event_action.causal_weighted_mass",
+    "saeagg.category.quantity_math_code.active_count",
+    "saeagg.category.quantity_math_code.total_mass",
+    "saeagg.category.quantity_math_code.max_value",
+    "saeagg.category.quantity_math_code.causal_weighted_mass",
+    "saeagg.category.relation_discourse.active_count",
+    "saeagg.category.relation_discourse.total_mass",
+    "saeagg.category.relation_discourse.max_value",
+    "saeagg.category.relation_discourse.causal_weighted_mass",
+    "saeagg.category.state_affect.active_count",
+    "saeagg.category.state_affect.total_mass",
+    "saeagg.category.state_affect.max_value",
+    "saeagg.category.state_affect.causal_weighted_mass",
+    "saeagg.category.task_instruction.active_count",
+    "saeagg.category.task_instruction.total_mass",
+    "saeagg.category.task_instruction.max_value",
+    "saeagg.category.task_instruction.causal_weighted_mass",
+    "saeagg.category.uncategorized_content.active_count",
+    "saeagg.category.uncategorized_content.total_mass",
+    "saeagg.category.uncategorized_content.max_value",
+    "saeagg.category.uncategorized_content.causal_weighted_mass",
+    "sae.feature.5439",
+    "sae.feature.17904",
+    "sae.feature.969",
+    "sae.feature.12360",
+    "sae.feature.20475",
+    "sae.feature.4673",
+    "sae.feature.18790",
+    "sae.feature.20108",
+    "sae.feature.20455",
+    "sae.feature.7571",
+    "sae.feature.2051",
+    "sae.feature.5189",
+    "sae.feature.708",
+    "sae.feature.654",
+    "sae.feature.5067",
+    "sae.feature.16426",
+    "sae.feature.9728",
+    "sae.feature.18510",
+    "sae.feature.4632",
+    "sae.feature.6538",
+    "sae.feature.8903",
+    "sae.feature.8863",
+    "sae.feature.12195",
+    "sae.feature.1708",
+    "sae.feature.4975",
+    "sae.feature.16827",
+    "sae.feature.18580",
+    "sae.feature.11365",
+    "sae.feature.4101",
+    "sae.feature.3076",
+    "sae.feature.19715",
+    "sae.feature.5843",
+    "sae.feature.14151",
+    "sae.feature.353",
+    "sae.feature.4866",
+    "sae.feature.17995",
+    "sae.feature.10842",
+    "sae.feature.3249",
+    "sae.feature.130",
+    "sae.feature.6408",
+    "sae.feature.7107",
+    "sae.feature.14772",
+    "sae.feature.4485",
+    "sae.feature.9994",
+    "sae.feature.15184",
+    "sae.feature.16134",
+    "sae.feature.11961",
+    "sae.feature.13063",
+    "sae.feature.17077",
+    "sae.feature.19870",
+    "sae.feature.15799",
+    "sae.feature.6140",
+    "sae.feature.13367",
+    "sae.feature.6642",
+    "sae.feature.9997",
+    "sae.feature.15772",
+    "sae.feature.3180",
+    "sae.feature.17577",
+    "sae.feature.14725",
+    "sae.feature.8323",
+    "sae.feature.1933",
+    "sae.feature.10327",
+    "sae.feature.1533",
+    "sae.feature.7283",
+    "sae.feature.14700",
+    "sae.feature.1670",
+    "sae.feature.9580",
+    "sae.feature.4847",
+    "sae.feature.9449",
+    "sae.feature.5542",
+    "sae.feature.416",
+    "sae.feature.3064",
+    "sae.feature.13292",
+    "sae.feature.3396",
+    "sae.feature.7058",
+    "sae.feature.15313",
+    "sae.feature.19007",
+    "sae.feature.11145",
+    "sae.feature.7231",
+    "sae.feature.19054",
+    "sae.feature.629",
+    "sae.feature.2536",
+    "sae.feature.14424",
+    "sae.feature.8533",
+    "sae.feature.4010",
+    "sae.feature.5225",
+    "sae.feature.4281",
+    "sae.feature.1324",
+    "sae.feature.9373",
+    "sae.feature.17797",
+    "sae.feature.4477",
+    "sae.feature.12533",
+    "sae.feature.1428",
+    "sae.feature.7310",
+    "sae.feature.5816",
+    "sae.feature.19073",
+    "sae.feature.15481",
+    "sae.feature.8375",
+    "sae.feature.1521",
+    "sae.feature.2193",
+    "sae.feature.3476",
+    "sae.feature.4637",
+    "sae.feature.11011",
+    "sae.feature.7366",
+    "sae.feature.12293",
+    "sae.feature.9978",
+    "sae.feature.219",
+    "sae.feature.5040",
+    "sae.feature.6774",
+    "sae.feature.16333",
+    "sae.feature.8590",
+    "sae.feature.461",
+    "sae.feature.19136",
+    "sae.feature.1063",
+    "sae.feature.2151",
+    "sae.feature.12323",
+    "sae.feature.6234",
+    "sae.feature.1380",
+    "sae.feature.5361",
+    "sae.feature.8599",
+    "sae.feature.30",
+    "sae.feature.6292",
+    "sae.feature.18687",
+    "sae.feature.16871",
+    "sae.feature.1127",
+    "sae.feature.12212",
+    "sae.feature.16999",
+    "sae.feature.16520",
+    "sae.feature.2919",
+    "sae.feature.767",
+    "sae.feature.11553",
+    "sae.feature.3257",
+    "sae.feature.12568",
+    "sae.feature.4521",
+    "sae.feature.15368",
+    "sae.feature.2373",
+    "sae.feature.79",
+    "sae.feature.19067",
+    "sae.feature.1270",
+    "sae.feature.19708",
+    "sae.feature.2307",
+    "sae.feature.13471",
+    "sae.feature.12661",
+    "sae.feature.17247",
+    "sae.feature.16902",
+    "sae.feature.7369",
+    "sae.feature.9144",
+    "sae.feature.13043",
+    "sae.feature.8135",
+    "sae.feature.16775",
+    "sae.feature.16471",
+    "sae.feature.1764",
+    "sae.feature.10600",
+    "sae.feature.5018",
+    "sae.feature.4136",
+    "sae.feature.6317",
+    "sae.feature.19487",
+    "sae.feature.7927",
+    "sae.feature.11566",
+    "sae.feature.7036",
+    "sae.feature.17749",
+    "sae.feature.18446",
+    "sae.feature.318",
+    "sae.feature.4097",
+    "sae.feature.19472",
+    "sae.feature.9693",
+    "sae.feature.13517",
+    "sae.feature.6896",
+    "sae.feature.7568",
+    "sae.feature.4376",
+    "sae.feature.281",
+    "sae.feature.1176",
+    "sae.feature.18028",
+    "sae.feature.11465",
+    "sae.feature.15407",
+    "sae.feature.69",
+    "sae.feature.2453",
+    "sae.feature.16989",
+    "sae.feature.10511",
+    "sae.feature.16866",
+    "sae.feature.11488",
+    "sae.feature.17324",
+    "sae.feature.477",
+    "sae.feature.18404",
+    "sae.feature.5259",
+    "sae.feature.12754",
+    "sae.feature.14279",
+    "sae.feature.16324",
+    "sae.feature.9542",
+    "sae.feature.308",
+    "sae.feature.19732",
+    "sae.feature.484",
+    "sae.feature.953",
+    "sae.feature.12169",
+    "sae.feature.11950",
+    "sae.feature.2871",
+    "sae.feature.17873",
+    "sae.feature.10951",
+    "sae.feature.15409",
+    "sae.feature.19405",
+    "sae.feature.5684",
+    "sae.feature.18",
+    "sae.feature.4909",
+    "sae.feature.9958",
+    "sae.feature.9005",
+    "sae.feature.12886",
+    "sae.feature.19917",
+    "sae.feature.856",
+    "sae.feature.14275",
+    "sae.feature.17786",
+    "sae.feature.937",
+    "sae.feature.2887",
+    "sae.feature.7833",
+    "sae.feature.11615",
+    "sae.feature.2593",
+    "sae.feature.7147",
+    "sae.feature.10357",
+    "sae.feature.15012",
+    "sae.feature.19645",
+    "sae.feature.2827",
+    "sae.feature.5994",
+    "sae.feature.8964",
+    "sae.feature.14041",
+    "sae.feature.9382",
+    "sae.feature.14926",
+    "sae.feature.492",
+    "sae.feature.18172",
+    "sae.feature.5806",
+    "sae.feature.9216",
+    "sae.feature.18712",
+    "sae.feature.3145",
+    "sae.feature.18078",
+    "sae.feature.8426",
+    "sae.feature.1607",
+    "sae.feature.16706",
+    "sae.feature.6854",
+    "sae.feature.7652",
+    "sae.feature.258",
+    "sae.feature.13831",
+    "sae.feature.290",
+    "sae.feature.11292",
+    "sae.feature.11864",
+    "sae.feature.10862",
+    "sae.feature.6049",
+    "sae.feature.3701"
+  ],
+  "feature_set_id": "core245_corrected_longmem_query_conditioned_train_dev",
+  "features": [
+    {
+      "categories": [
+        "task_instruction",
+        "event_action"
+      ],
+      "causal_effect": 3.06102566793561,
+      "feature_id": "5439",
+      "label": "describe whats happening as",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 3.972605148951213,
+      "feature_id": "17904",
+      "label": "segment-initial tokens with world focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 3.6603779196739197,
+      "feature_id": "969",
+      "label": "mass in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain",
+        "relation_discourse"
+      ],
+      "causal_effect": 2.8858992258707685,
+      "feature_id": "12360",
+      "label": "state in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code",
+        "event_action"
+      ],
+      "causal_effect": 1.263550375898679,
+      "feature_id": "20475",
+      "label": "update in algorithm context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain",
+        "event_action"
+      ],
+      "causal_effect": 1.8662164409955344,
+      "feature_id": "4673",
+      "label": "record in text context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain",
+        "relation_discourse",
+        "state_affect"
+      ],
+      "causal_effect": 0.9406287421782812,
+      "feature_id": "18790",
+      "label": "alive in context of founder survival",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain",
+        "relation_discourse"
+      ],
+      "causal_effect": 1.836314434806506,
+      "feature_id": "20108",
+      "label": "drug-related context tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "relation_discourse",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.9398288022105893,
+      "feature_id": "20455",
+      "label": "math problem reference tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "entity_domain",
+        "relation_discourse"
+      ],
+      "causal_effect": 0.08861066897710165,
+      "feature_id": "7571",
+      "label": "reaction context tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "entity_domain",
+        "relation_discourse"
+      ],
+      "causal_effect": 0.22031211853027344,
+      "feature_id": "2051",
+      "label": "noun followed by instruction",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "event_action"
+      ],
+      "causal_effect": 1.5335754056771596,
+      "feature_id": "5189",
+      "label": "segment-initial tokens with choose",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "relation_discourse"
+      ],
+      "causal_effect": 1.003751869002978,
+      "feature_id": "708",
+      "label": "segment-initial tokens with means focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain",
+        "relation_discourse",
+        "state_affect"
+      ],
+      "causal_effect": 0.04570281505584717,
+      "feature_id": "654",
+      "label": "condition-related tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "relation_discourse",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.08467555046081543,
+      "feature_id": "5067",
+      "label": "type variable reference in type inference",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "relation_discourse",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.02349749207496643,
+      "feature_id": "16426",
+      "label": "math problem answer reference",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.43615977062533295,
+      "feature_id": "9728",
+      "label": "state_s_question_index",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "event_action"
+      ],
+      "causal_effect": 0.09469505585730076,
+      "feature_id": "18510",
+      "label": "problem node_x and operation",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.1896330714225769,
+      "feature_id": "4632",
+      "label": "math expression delimiter",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.07955263058344524,
+      "feature_id": "6538",
+      "label": "math problem vertices reference",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain",
+        "state_affect"
+      ],
+      "causal_effect": 0.02828275163968404,
+      "feature_id": "8903",
+      "label": "conditions text patterns",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain",
+        "state_affect"
+      ],
+      "causal_effect": 0.034918089707692467,
+      "feature_id": "8863",
+      "label": "reaction condition selection context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "state_affect"
+      ],
+      "causal_effect": 1.2237332065900168,
+      "feature_id": "12195",
+      "label": "segment-initial already in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.047755674459040165,
+      "feature_id": "1708",
+      "label": "math problem variable references",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "state_affect"
+      ],
+      "causal_effect": 1.0904633154471715,
+      "feature_id": "4975",
+      "label": "recent context tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.06875197092692059,
+      "feature_id": "16827",
+      "label": "math problem question words",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "relation_discourse"
+      ],
+      "causal_effect": 0.03709995746612549,
+      "feature_id": "18580",
+      "label": "reference tokens in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.07079756259918212,
+      "feature_id": "11365",
+      "label": "math problem token",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.8351790110270182,
+      "feature_id": "4101",
+      "label": "alarm context tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.020710289478302002,
+      "feature_id": "3076",
+      "label": "define in mathematical context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.6566796338496109,
+      "feature_id": "19715",
+      "label": "variable definition in problem context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.42216598987579346,
+      "feature_id": "5843",
+      "label": "pdb atom coordinate focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.0218028724193573,
+      "feature_id": "14151",
+      "label": "math variable in problem context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.03210590283075969,
+      "feature_id": "353",
+      "label": "math competition context tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.03841143846511841,
+      "feature_id": "4866",
+      "label": "3d coordinate triplets with atomic labels",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse",
+        "state_affect"
+      ],
+      "causal_effect": 0.3012154698371887,
+      "feature_id": "17995",
+      "label": "segment-initial tokens with feel focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.02688896656036377,
+      "feature_id": "10842",
+      "label": "variable value in question text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.37639995416005456,
+      "feature_id": "3249",
+      "label": "rule language segment",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.41183292865753174,
+      "feature_id": "130",
+      "label": "math problem enumeration tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain",
+        "relation_discourse"
+      ],
+      "causal_effect": 0.029538646340370178,
+      "feature_id": "6408",
+      "label": "summer in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 1.354226939380169,
+      "feature_id": "7107",
+      "label": "segment-initial tokens with where focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.4528683622678121,
+      "feature_id": "14772",
+      "label": "molecule focus tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.1472131907939911,
+      "feature_id": "4485",
+      "label": "contextual instruction phrases",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.2767921288808187,
+      "feature_id": "9994",
+      "label": "segment-initial problem tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.2962161799271902,
+      "feature_id": "15184",
+      "label": "problem instruction tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.20692257583141327,
+      "feature_id": "16134",
+      "label": "question-focused token in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.3853793662662307,
+      "feature_id": "11961",
+      "label": "sum of first k local values on processor p",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.25078651309013367,
+      "feature_id": "13063",
+      "label": "task-focused text in problem-solving context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.0336002508799235,
+      "feature_id": "17077",
+      "label": "question word many in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.02170105775197347,
+      "feature_id": "19870",
+      "label": "token with to or need as focus word",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "event_action"
+      ],
+      "causal_effect": 1.1062385241190595,
+      "feature_id": "15799",
+      "label": "segment-initial tokens with stinence focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.032557333509127304,
+      "feature_id": "6140",
+      "label": "segment-initial tokens with goal focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.026145021120707195,
+      "feature_id": "13367",
+      "label": "geometry problem focus words",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.02266105016072591,
+      "feature_id": "6642",
+      "label": "segment-initial instruction tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.35773109893004096,
+      "feature_id": "9997",
+      "label": "problem-focused tokens in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.06401471296946208,
+      "feature_id": "15772",
+      "label": "math problem context with and",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.05315645535786946,
+      "feature_id": "3180",
+      "label": "math definition tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.1549413601557414,
+      "feature_id": "17577",
+      "label": "code-related terms in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.1130069891611735,
+      "feature_id": "14725",
+      "label": "track progress or activity",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.04844842354456584,
+      "feature_id": "8323",
+      "label": "molecule focus character",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.09698923428853354,
+      "feature_id": "1933",
+      "label": "citizenship/citizens in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.03175969918568929,
+      "feature_id": "10327",
+      "label": "problem node references",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.09037536382675163,
+      "feature_id": "1533",
+      "label": "state definition queries",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.06462568541367848,
+      "feature_id": "7283",
+      "label": "output token context in question-answer format",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.5848012690742811,
+      "feature_id": "14700",
+      "label": "head-related noun in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.5232452650864919,
+      "feature_id": "1670",
+      "label": "trail-related nouns in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.034196008816555455,
+      "feature_id": "9580",
+      "label": "molecular carbon atom context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.026216864585876465,
+      "feature_id": "4847",
+      "label": "person-focused context tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.5714635451634724,
+      "feature_id": "9449",
+      "label": "variable assignment values",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.11667845646540324,
+      "feature_id": "5542",
+      "label": "named person in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.0274966557820638,
+      "feature_id": "416",
+      "label": "segment-initial tokens with -world focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.7065090338389078,
+      "feature_id": "3064",
+      "label": "token with activation value and offset",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.48141499360402423,
+      "feature_id": "13292",
+      "label": "pre-s_t delta addition context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain",
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.06823917229970297,
+      "feature_id": "3396",
+      "label": "chemical formula focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "event_action"
+      ],
+      "causal_effect": 0.14558335145314533,
+      "feature_id": "7058",
+      "label": "order in sentence context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.43630987405776983,
+      "feature_id": "15313",
+      "label": "revenue growth mention",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction",
+        "relation_discourse"
+      ],
+      "causal_effect": 0.0779141088326772,
+      "feature_id": "19007",
+      "label": "subproblem reference followed by comma",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.03669333457946777,
+      "feature_id": "11145",
+      "label": "japanese food terms in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.3344072426358859,
+      "feature_id": "7231",
+      "label": "delta in algorithm context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.2855633199214936,
+      "feature_id": "19054",
+      "label": "variable assignment list",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "event_action"
+      ],
+      "causal_effect": 0.06325489282608032,
+      "feature_id": "629",
+      "label": "use in bullet points",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.30873129765192664,
+      "feature_id": "2536",
+      "label": "noun in context of maintenance",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.052721897761027016,
+      "feature_id": "14424",
+      "label": "question answer variables",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "event_action"
+      ],
+      "causal_effect": 0.08867443601290385,
+      "feature_id": "8533",
+      "label": "release-related tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.25304560859998065,
+      "feature_id": "4010",
+      "label": "watch-related noun phrases",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.3485385632763306,
+      "feature_id": "5225",
+      "label": "ipad in context of internet access",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.177594393491745,
+      "feature_id": "4281",
+      "label": "empathy-related noun in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 1.4844071765740712,
+      "feature_id": "1324",
+      "label": "match in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.19608418146769208,
+      "feature_id": "9373",
+      "label": "problem node answer subtraction",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "event_action"
+      ],
+      "causal_effect": 0.06049229701360066,
+      "feature_id": "17797",
+      "label": "segment-initial tokens with surround or surrounded",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.21021908521652222,
+      "feature_id": "4477",
+      "label": "video-related text context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.40129907925923664,
+      "feature_id": "12533",
+      "label": "colon-after-quote tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.2549264033635457,
+      "feature_id": "1428",
+      "label": "verb followed by preposition to object",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.20782337586085,
+      "feature_id": "7310",
+      "label": "size-related text patterns",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.7836790817479292,
+      "feature_id": "5816",
+      "label": "elif in conditional logic",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.1501380205154419,
+      "feature_id": "19073",
+      "label": "gift-related token in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.22569075971841812,
+      "feature_id": "15481",
+      "label": "cause-related token in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.11892646551132202,
+      "feature_id": "8375",
+      "label": "segment-initial tokens with tips focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "event_action"
+      ],
+      "causal_effect": 0.023134380578994754,
+      "feature_id": "1521",
+      "label": "action verbs in donation contexts",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.36853353182474774,
+      "feature_id": "2193",
+      "label": "variable value mention in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.02167755365371704,
+      "feature_id": "3476",
+      "label": "segment-initial tokens with easy focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.14194364349047345,
+      "feature_id": "4637",
+      "label": "pain-related token contexts",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.21620186169942218,
+      "feature_id": "11011",
+      "label": "segment-initial tokens in bullet lists",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.3251978556315104,
+      "feature_id": "7366",
+      "label": "math expression follow-up question",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.1416912078857422,
+      "feature_id": "12293",
+      "label": "charity-related noun in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.057408034801483154,
+      "feature_id": "9978",
+      "label": "vintage-related noun phrases",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.14577913284301758,
+      "feature_id": "219",
+      "label": "light-related noun in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "event_action"
+      ],
+      "causal_effect": 0.1628418117761612,
+      "feature_id": "5040",
+      "label": "reaction use context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.1390380064646403,
+      "feature_id": "6774",
+      "label": "anxiety-related token activations",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.04875147342681885,
+      "feature_id": "16333",
+      "label": "finger-related food items",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "task_instruction"
+      ],
+      "causal_effect": 0.04401397705078125,
+      "feature_id": "8590",
+      "label": "question word how in queries",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.6870941917101542,
+      "feature_id": "461",
+      "label": "text segment with dry as focus word",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.05029306809107462,
+      "feature_id": "19136",
+      "label": "chemical structure context tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.03755149245262146,
+      "feature_id": "1063",
+      "label": "segment-initial strategy tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.06129380067189535,
+      "feature_id": "2151",
+      "label": "move sequence formatting",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.06011304259300232,
+      "feature_id": "12323",
+      "label": "segment-initial tokens with management or manage",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.02801322742986182,
+      "feature_id": "6234",
+      "label": "sleep-related context tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.051662176847457886,
+      "feature_id": "1380",
+      "label": "toy-related token activations",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.02051925162474314,
+      "feature_id": "5361",
+      "label": "feature-related token context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.03833150863647461,
+      "feature_id": "8599",
+      "label": "segment-initial tokens with practices or practice",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.04819178581237793,
+      "feature_id": "30",
+      "label": "proper noun followed by common noun",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.07076677680015564,
+      "feature_id": "6292",
+      "label": "integer expressions in math problems",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.05454228321711222,
+      "feature_id": "18687",
+      "label": "disc sequence in puzzle context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.03470240347087383,
+      "feature_id": "16871",
+      "label": "math notation in focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.03482302029927572,
+      "feature_id": "1127",
+      "label": "mathematical variable in equations",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.10282965501149496,
+      "feature_id": "12212",
+      "label": "segment-initial tokens with focus words",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.6425117254257202,
+      "feature_id": "16999",
+      "label": "underlined text in instructions",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.11398454507191975,
+      "feature_id": "16520",
+      "label": "leaf-related nouns in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.1286913420384129,
+      "feature_id": "2919",
+      "label": "opening parenthesis in code context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.021631111701329548,
+      "feature_id": "767",
+      "label": "language learning context tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.024487813313802082,
+      "feature_id": "11553",
+      "label": "clothing-related token contexts",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.2784203886985779,
+      "feature_id": "3257",
+      "label": "variable assignment value extraction",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.5930963158607483,
+      "feature_id": "12568",
+      "label": "reporting section tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "event_action"
+      ],
+      "causal_effect": 0.3791729224224885,
+      "feature_id": "4521",
+      "label": "ab in context of alcoholism prevention",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.08823781708876292,
+      "feature_id": "15368",
+      "label": "lambda expression focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.02063441276550293,
+      "feature_id": "2373",
+      "label": "theme-related text patterns",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.03155336777369181,
+      "feature_id": "79",
+      "label": "market-related noun phrases",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.04961054027080536,
+      "feature_id": "19067",
+      "label": "verb followed by preposition",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.026340221161566053,
+      "feature_id": "1270",
+      "label": "json key-value pairs in code",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.030140558878580727,
+      "feature_id": "19708",
+      "label": "noun followed by adjective",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.03936437765757243,
+      "feature_id": "2307",
+      "label": "problem node references in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.05546094973882038,
+      "feature_id": "13471",
+      "label": "balaban index formula terms",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.05027449131011963,
+      "feature_id": "12661",
+      "label": "revenue-focused token in financial context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.024480173985163372,
+      "feature_id": "17247",
+      "label": "odd-index negation in s_t recording",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.11262021780324478,
+      "feature_id": "16902",
+      "label": "math expression end",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.08007991313934326,
+      "feature_id": "7369",
+      "label": "coin-related probability terms",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.13401567935943604,
+      "feature_id": "9144",
+      "label": "flow algorithm tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.027822745478867244,
+      "feature_id": "13043",
+      "label": "variable in code snippet",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.056133305033047996,
+      "feature_id": "8135",
+      "label": "trello feature mentions",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.04243935147921244,
+      "feature_id": "16775",
+      "label": "mod expression in math problems",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.4633706212043762,
+      "feature_id": "16471",
+      "label": "disease spread context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.024819135665893555,
+      "feature_id": "1764",
+      "label": "int value in structured text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.03233532110850017,
+      "feature_id": "10600",
+      "label": "problem node reference followed by colon",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.10549697279930113,
+      "feature_id": "5018",
+      "label": "variable assignment chain context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.47993311534325284,
+      "feature_id": "4136",
+      "label": "trajectory-related context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.3193689783414205,
+      "feature_id": "6317",
+      "label": "contextual token within phrases",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.3165396948655446,
+      "feature_id": "19487",
+      "label": "flexible in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.29217485586802167,
+      "feature_id": "7927",
+      "label": "noun in sentence context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.38366562128067017,
+      "feature_id": "11566",
+      "label": "typing in code context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.30230398972829187,
+      "feature_id": "7036",
+      "label": "numerical rating in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.27625036239624023,
+      "feature_id": "17749",
+      "label": "quoted default dead phrase",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "quantity_math_code"
+      ],
+      "causal_effect": 0.021014153957366943,
+      "feature_id": "18446",
+      "label": "mod 7 expression end",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.19955185552438098,
+      "feature_id": "318",
+      "label": "professional term in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.23485863208770752,
+      "feature_id": "4097",
+      "label": "stand in sentence context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "entity_domain"
+      ],
+      "causal_effect": 0.03429488341013591,
+      "feature_id": "19472",
+      "label": "product selection criteria",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.21794978777567545,
+      "feature_id": "9693",
+      "label": "individual noun in sentence",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.2033299406369527,
+      "feature_id": "13517",
+      "label": "action in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.2136855622132619,
+      "feature_id": "6896",
+      "label": "organization mentions in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.134078628073136,
+      "feature_id": "7568",
+      "label": "list item starter tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.1012052297592163,
+      "feature_id": "4376",
+      "label": "call-to-action verbs in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.19185534057517845,
+      "feature_id": "281",
+      "label": "segment-initial tokens with warm focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.24610664943854013,
+      "feature_id": "1176",
+      "label": "voronoi diagram magic numbers",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.12464433908462526,
+      "feature_id": "18028",
+      "label": "segment-initial tokens with rich focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.14716919511556625,
+      "feature_id": "11465",
+      "label": "language-related responses",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.1841269830862681,
+      "feature_id": "15407",
+      "label": "box in text context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.10437304774920145,
+      "feature_id": "69",
+      "label": "experiment in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.1571691830952962,
+      "feature_id": "2453",
+      "label": "cast noun in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.1750282843907674,
+      "feature_id": "16989",
+      "label": "contextual influence mentions",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.10388455788294473,
+      "feature_id": "10511",
+      "label": "reach out to someone",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.11174234747886658,
+      "feature_id": "16866",
+      "label": "tone and voice descriptors",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.03562140464782715,
+      "feature_id": "11488",
+      "label": "content-focused token in dialogue",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.09691238403320312,
+      "feature_id": "17324",
+      "label": "list item start with 1.  followed by as a",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.11473222573598225,
+      "feature_id": "477",
+      "label": "show in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.023814168913910787,
+      "feature_id": "18404",
+      "label": "model response to user query",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.088035782178243,
+      "feature_id": "5259",
+      "label": "green in text context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.06922992070515951,
+      "feature_id": "12754",
+      "label": "process-related text segments",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.17344856758912405,
+      "feature_id": "14279",
+      "label": "recipe ingredient list continuation",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.28755110284934443,
+      "feature_id": "16324",
+      "label": "segment-initial tokens in sentences",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.14392308394114176,
+      "feature_id": "9542",
+      "label": "residue position analysis",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.07892288764317831,
+      "feature_id": "308",
+      "label": "angle-related tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.10342665513356528,
+      "feature_id": "19732",
+      "label": "comparative conditionals with greater",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.11436503132184347,
+      "feature_id": "484",
+      "label": "token with determined in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.03707464536031087,
+      "feature_id": "953",
+      "label": "segment-initial tokens with prior focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.057681639989217125,
+      "feature_id": "12169",
+      "label": "list starter tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.04886044065157573,
+      "feature_id": "11950",
+      "label": "professional expertise mentions",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.0862178802490234,
+      "feature_id": "2871",
+      "label": "focus word in quoted context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.033601144949595124,
+      "feature_id": "17873",
+      "label": "clear focus token in instructional text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.11497807502746582,
+      "feature_id": "10951",
+      "label": "art-related noun in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.10961400469144186,
+      "feature_id": "15409",
+      "label": "celebrate small wins",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.045025149981180825,
+      "feature_id": "19405",
+      "label": "real-time token context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.05505035320917765,
+      "feature_id": "5684",
+      "label": "name in text context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.08394668499628702,
+      "feature_id": "18",
+      "label": "statement tokens in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.07423088947931925,
+      "feature_id": "4909",
+      "label": "weathering techniques description",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.6121623516082764,
+      "feature_id": "9958",
+      "label": "action verbs in instructions",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.04943771163622539,
+      "feature_id": "9005",
+      "label": "term-focused text segments",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.024409383535385132,
+      "feature_id": "12886",
+      "label": "middle token in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.030815660953521725,
+      "feature_id": "19917",
+      "label": "scale rating context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.052640438079833984,
+      "feature_id": "856",
+      "label": "named entity in bold",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.06279301643371585,
+      "feature_id": "14275",
+      "label": "prepositional phrase with for",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.025223374366760254,
+      "feature_id": "17786",
+      "label": "whether questions in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.055873751640319824,
+      "feature_id": "937",
+      "label": "noun following who or chi",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.02138636509577433,
+      "feature_id": "2887",
+      "label": "beach turtle descriptions",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.02062058448791504,
+      "feature_id": "7833",
+      "label": "special token in text segments",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.02678823471069336,
+      "feature_id": "11615",
+      "label": "document-related terms",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.041651194294293724,
+      "feature_id": "2593",
+      "label": "contextual token with iq focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.026371687650680542,
+      "feature_id": "7147",
+      "label": "when clause initiation",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.024539709091186523,
+      "feature_id": "10357",
+      "label": "quoted dialogue tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.42585092782974243,
+      "feature_id": "15012",
+      "label": "reaction conditions following after",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.08713535467783609,
+      "feature_id": "19645",
+      "label": "standard in reaction context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.02175581455230713,
+      "feature_id": "2827",
+      "label": "elevator pitch tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.03327099482218424,
+      "feature_id": "5994",
+      "label": "focus token in context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.05527776479721071,
+      "feature_id": "8964",
+      "label": "select in conditional clauses",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.3634347915649414,
+      "feature_id": "14041",
+      "label": "milk-related noun in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.033014257748921715,
+      "feature_id": "9382",
+      "label": "rock-related terms in text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.2798198461532593,
+      "feature_id": "14926",
+      "label": "segment-initial tokens with fresh focus",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.3155808448791504,
+      "feature_id": "492",
+      "label": "descriptive noun phrase",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.11235662301381429,
+      "feature_id": "18172",
+      "label": "role field tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "relation_discourse"
+      ],
+      "causal_effect": 0.07748498519261678,
+      "feature_id": "5806",
+      "label": "job posting related nouns",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.052955806255340576,
+      "feature_id": "9216",
+      "label": "focus-driven query tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.0475001335144043,
+      "feature_id": "18712",
+      "label": "local context tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.15906278292338052,
+      "feature_id": "3145",
+      "label": "special magic numbers query",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.1510787010192871,
+      "feature_id": "18078",
+      "label": "mod in mathematical expressions",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.038428544998168945,
+      "feature_id": "8426",
+      "label": "blend of genres or styles",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.024345795313517254,
+      "feature_id": "1607",
+      "label": "list item start tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.033057282368342086,
+      "feature_id": "16706",
+      "label": "introductory section tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.024319684132933617,
+      "feature_id": "6854",
+      "label": "future-focused sentence fragments",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.04441086451212565,
+      "feature_id": "7652",
+      "label": "questioned entity in discourse",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.03828199704488119,
+      "feature_id": "258",
+      "label": "segment-initial tokens with focus words",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.021259307861328125,
+      "feature_id": "13831",
+      "label": "segment-initial tokens with validate or validation",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.035410404205322266,
+      "feature_id": "290",
+      "label": "domain-specific text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.03864185015360514,
+      "feature_id": "11292",
+      "label": "segment-initial system token",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.027135928471883137,
+      "feature_id": "11864",
+      "label": "online recommendation context",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.05616895357767741,
+      "feature_id": "10862",
+      "label": "slot description text",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.02882784605026245,
+      "feature_id": "6049",
+      "label": "list item continuation tokens",
+      "source_row": {},
+      "validation_status": "causal_support"
+    },
+    {
+      "categories": [
+        "uncategorized_content"
+      ],
+      "causal_effect": 0.06271127859751384,
+      "feature_id": "3701",
+      "label": "scene perspective descriptors",
+      "source_row": {},
+      "validation_status": "causal_support"
+    }
+  ],
+  "missing_value_policy": "zero_with_explicit_group_availability_flags",
+  "sae_feature_categories": {
+    "10327": [
+      "task_instruction"
+    ],
+    "10357": [
+      "uncategorized_content"
+    ],
+    "10511": [
+      "uncategorized_content"
+    ],
+    "10600": [
+      "quantity_math_code"
+    ],
+    "1063": [
+      "relation_discourse"
+    ],
+    "10842": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "10862": [
+      "uncategorized_content"
+    ],
+    "10951": [
+      "relation_discourse"
+    ],
+    "11011": [
+      "relation_discourse"
+    ],
+    "11145": [
+      "entity_domain"
+    ],
+    "1127": [
+      "quantity_math_code"
+    ],
+    "11292": [
+      "uncategorized_content"
+    ],
+    "11365": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "11465": [
+      "uncategorized_content"
+    ],
+    "11488": [
+      "uncategorized_content"
+    ],
+    "11553": [
+      "relation_discourse"
+    ],
+    "11566": [
+      "quantity_math_code"
+    ],
+    "11615": [
+      "relation_discourse"
+    ],
+    "1176": [
+      "uncategorized_content"
+    ],
+    "11864": [
+      "uncategorized_content"
+    ],
+    "11950": [
+      "uncategorized_content"
+    ],
+    "11961": [
+      "entity_domain"
+    ],
+    "12169": [
+      "uncategorized_content"
+    ],
+    "12195": [
+      "state_affect"
+    ],
+    "12212": [
+      "relation_discourse"
+    ],
+    "12293": [
+      "relation_discourse"
+    ],
+    "12323": [
+      "relation_discourse"
+    ],
+    "12360": [
+      "entity_domain",
+      "relation_discourse"
+    ],
+    "12533": [
+      "quantity_math_code"
+    ],
+    "12568": [
+      "uncategorized_content"
+    ],
+    "12661": [
+      "relation_discourse"
+    ],
+    "1270": [
+      "quantity_math_code"
+    ],
+    "12754": [
+      "relation_discourse"
+    ],
+    "12886": [
+      "uncategorized_content"
+    ],
+    "130": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "13043": [
+      "quantity_math_code"
+    ],
+    "13063": [
+      "task_instruction"
+    ],
+    "1324": [
+      "uncategorized_content"
+    ],
+    "13292": [
+      "quantity_math_code"
+    ],
+    "13367": [
+      "task_instruction"
+    ],
+    "13471": [
+      "quantity_math_code"
+    ],
+    "13517": [
+      "uncategorized_content"
+    ],
+    "1380": [
+      "relation_discourse"
+    ],
+    "13831": [
+      "uncategorized_content"
+    ],
+    "14041": [
+      "uncategorized_content"
+    ],
+    "14151": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "14275": [
+      "uncategorized_content"
+    ],
+    "14279": [
+      "uncategorized_content"
+    ],
+    "1428": [
+      "relation_discourse"
+    ],
+    "14424": [
+      "task_instruction"
+    ],
+    "14700": [
+      "relation_discourse"
+    ],
+    "14725": [
+      "entity_domain"
+    ],
+    "14772": [
+      "entity_domain"
+    ],
+    "14926": [
+      "uncategorized_content"
+    ],
+    "15012": [
+      "uncategorized_content"
+    ],
+    "15184": [
+      "task_instruction"
+    ],
+    "1521": [
+      "event_action"
+    ],
+    "15313": [
+      "relation_discourse"
+    ],
+    "1533": [
+      "entity_domain"
+    ],
+    "15368": [
+      "quantity_math_code"
+    ],
+    "15407": [
+      "uncategorized_content"
+    ],
+    "15409": [
+      "uncategorized_content"
+    ],
+    "15481": [
+      "relation_discourse"
+    ],
+    "15772": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "15799": [
+      "event_action"
+    ],
+    "1607": [
+      "uncategorized_content"
+    ],
+    "16134": [
+      "task_instruction"
+    ],
+    "16324": [
+      "uncategorized_content"
+    ],
+    "16333": [
+      "relation_discourse"
+    ],
+    "16426": [
+      "task_instruction",
+      "relation_discourse",
+      "quantity_math_code"
+    ],
+    "16471": [
+      "uncategorized_content"
+    ],
+    "16520": [
+      "relation_discourse"
+    ],
+    "1670": [
+      "relation_discourse"
+    ],
+    "16706": [
+      "uncategorized_content"
+    ],
+    "16775": [
+      "quantity_math_code"
+    ],
+    "16827": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "16866": [
+      "uncategorized_content"
+    ],
+    "16871": [
+      "quantity_math_code"
+    ],
+    "16902": [
+      "quantity_math_code"
+    ],
+    "16989": [
+      "uncategorized_content"
+    ],
+    "16999": [
+      "uncategorized_content"
+    ],
+    "17077": [
+      "task_instruction"
+    ],
+    "1708": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "17247": [
+      "quantity_math_code"
+    ],
+    "17324": [
+      "uncategorized_content"
+    ],
+    "17577": [
+      "relation_discourse",
+      "quantity_math_code"
+    ],
+    "1764": [
+      "quantity_math_code"
+    ],
+    "17749": [
+      "uncategorized_content"
+    ],
+    "17786": [
+      "uncategorized_content"
+    ],
+    "17797": [
+      "event_action"
+    ],
+    "17873": [
+      "uncategorized_content"
+    ],
+    "17904": [
+      "entity_domain"
+    ],
+    "17995": [
+      "relation_discourse",
+      "state_affect"
+    ],
+    "18": [
+      "uncategorized_content"
+    ],
+    "18028": [
+      "uncategorized_content"
+    ],
+    "18078": [
+      "uncategorized_content"
+    ],
+    "18172": [
+      "uncategorized_content"
+    ],
+    "18404": [
+      "uncategorized_content"
+    ],
+    "18446": [
+      "quantity_math_code"
+    ],
+    "18510": [
+      "task_instruction",
+      "event_action"
+    ],
+    "18580": [
+      "task_instruction",
+      "relation_discourse"
+    ],
+    "18687": [
+      "quantity_math_code"
+    ],
+    "18712": [
+      "uncategorized_content"
+    ],
+    "18790": [
+      "entity_domain",
+      "relation_discourse",
+      "state_affect"
+    ],
+    "19007": [
+      "task_instruction",
+      "relation_discourse"
+    ],
+    "19054": [
+      "quantity_math_code"
+    ],
+    "19067": [
+      "relation_discourse"
+    ],
+    "19073": [
+      "relation_discourse"
+    ],
+    "19136": [
+      "entity_domain"
+    ],
+    "1933": [
+      "entity_domain"
+    ],
+    "19405": [
+      "uncategorized_content"
+    ],
+    "19472": [
+      "entity_domain"
+    ],
+    "19487": [
+      "uncategorized_content"
+    ],
+    "19645": [
+      "uncategorized_content"
+    ],
+    "19708": [
+      "relation_discourse"
+    ],
+    "19715": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "19732": [
+      "uncategorized_content"
+    ],
+    "19870": [
+      "task_instruction"
+    ],
+    "19917": [
+      "uncategorized_content"
+    ],
+    "20108": [
+      "entity_domain",
+      "relation_discourse"
+    ],
+    "20455": [
+      "task_instruction",
+      "relation_discourse",
+      "quantity_math_code"
+    ],
+    "20475": [
+      "task_instruction",
+      "quantity_math_code",
+      "event_action"
+    ],
+    "2051": [
+      "task_instruction",
+      "entity_domain",
+      "relation_discourse"
+    ],
+    "2151": [
+      "quantity_math_code"
+    ],
+    "219": [
+      "relation_discourse"
+    ],
+    "2193": [
+      "quantity_math_code"
+    ],
+    "2307": [
+      "quantity_math_code"
+    ],
+    "2373": [
+      "relation_discourse"
+    ],
+    "2453": [
+      "uncategorized_content"
+    ],
+    "2536": [
+      "relation_discourse"
+    ],
+    "258": [
+      "uncategorized_content"
+    ],
+    "2593": [
+      "uncategorized_content"
+    ],
+    "281": [
+      "uncategorized_content"
+    ],
+    "2827": [
+      "uncategorized_content"
+    ],
+    "2871": [
+      "uncategorized_content"
+    ],
+    "2887": [
+      "uncategorized_content"
+    ],
+    "290": [
+      "uncategorized_content"
+    ],
+    "2919": [
+      "quantity_math_code"
+    ],
+    "30": [
+      "relation_discourse"
+    ],
+    "3064": [
+      "quantity_math_code"
+    ],
+    "3076": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "308": [
+      "relation_discourse"
+    ],
+    "3145": [
+      "uncategorized_content"
+    ],
+    "318": [
+      "uncategorized_content"
+    ],
+    "3180": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "3249": [
+      "task_instruction"
+    ],
+    "3257": [
+      "quantity_math_code"
+    ],
+    "3396": [
+      "entity_domain",
+      "quantity_math_code"
+    ],
+    "3476": [
+      "task_instruction"
+    ],
+    "353": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "3701": [
+      "uncategorized_content"
+    ],
+    "4010": [
+      "relation_discourse"
+    ],
+    "4097": [
+      "uncategorized_content"
+    ],
+    "4101": [
+      "entity_domain"
+    ],
+    "4136": [
+      "uncategorized_content"
+    ],
+    "416": [
+      "entity_domain"
+    ],
+    "4281": [
+      "relation_discourse"
+    ],
+    "4376": [
+      "uncategorized_content"
+    ],
+    "4477": [
+      "relation_discourse"
+    ],
+    "4485": [
+      "task_instruction"
+    ],
+    "4521": [
+      "event_action"
+    ],
+    "461": [
+      "uncategorized_content"
+    ],
+    "4632": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "4637": [
+      "relation_discourse"
+    ],
+    "4673": [
+      "entity_domain",
+      "event_action"
+    ],
+    "477": [
+      "uncategorized_content"
+    ],
+    "484": [
+      "uncategorized_content"
+    ],
+    "4847": [
+      "entity_domain"
+    ],
+    "4866": [
+      "entity_domain",
+      "quantity_math_code"
+    ],
+    "4909": [
+      "uncategorized_content"
+    ],
+    "492": [
+      "uncategorized_content"
+    ],
+    "4975": [
+      "state_affect"
+    ],
+    "5018": [
+      "quantity_math_code"
+    ],
+    "5040": [
+      "event_action"
+    ],
+    "5067": [
+      "task_instruction",
+      "relation_discourse",
+      "quantity_math_code"
+    ],
+    "5189": [
+      "task_instruction",
+      "event_action"
+    ],
+    "5225": [
+      "relation_discourse"
+    ],
+    "5259": [
+      "uncategorized_content"
+    ],
+    "5361": [
+      "relation_discourse"
+    ],
+    "5439": [
+      "task_instruction",
+      "event_action"
+    ],
+    "5542": [
+      "entity_domain"
+    ],
+    "5684": [
+      "uncategorized_content"
+    ],
+    "5806": [
+      "relation_discourse"
+    ],
+    "5816": [
+      "quantity_math_code"
+    ],
+    "5843": [
+      "entity_domain",
+      "quantity_math_code"
+    ],
+    "5994": [
+      "uncategorized_content"
+    ],
+    "6049": [
+      "uncategorized_content"
+    ],
+    "6140": [
+      "task_instruction"
+    ],
+    "6234": [
+      "relation_discourse"
+    ],
+    "629": [
+      "event_action"
+    ],
+    "6292": [
+      "quantity_math_code"
+    ],
+    "6317": [
+      "uncategorized_content"
+    ],
+    "6408": [
+      "entity_domain",
+      "relation_discourse"
+    ],
+    "6538": [
+      "task_instruction",
+      "quantity_math_code"
+    ],
+    "654": [
+      "entity_domain",
+      "relation_discourse",
+      "state_affect"
+    ],
+    "6642": [
+      "task_instruction"
+    ],
+    "6774": [
+      "relation_discourse"
+    ],
+    "6854": [
+      "uncategorized_content"
+    ],
+    "6896": [
+      "uncategorized_content"
+    ],
+    "69": [
+      "uncategorized_content"
+    ],
+    "7036": [
+      "uncategorized_content"
+    ],
+    "7058": [
+      "event_action"
+    ],
+    "708": [
+      "task_instruction",
+      "relation_discourse"
+    ],
+    "7107": [
+      "relation_discourse"
+    ],
+    "7147": [
+      "uncategorized_content"
+    ],
+    "7231": [
+      "quantity_math_code"
+    ],
+    "7283": [
+      "task_instruction"
+    ],
+    "7310": [
+      "relation_discourse"
+    ],
+    "7366": [
+      "quantity_math_code"
+    ],
+    "7369": [
+      "relation_discourse"
+    ],
+    "7568": [
+      "uncategorized_content"
+    ],
+    "7571": [
+      "task_instruction",
+      "entity_domain",
+      "relation_discourse"
+    ],
+    "7652": [
+      "uncategorized_content"
+    ],
+    "767": [
+      "relation_discourse"
+    ],
+    "7833": [
+      "uncategorized_content"
+    ],
+    "79": [
+      "relation_discourse"
+    ],
+    "7927": [
+      "uncategorized_content"
+    ],
+    "8135": [
+      "relation_discourse"
+    ],
+    "8323": [
+      "entity_domain"
+    ],
+    "8375": [
+      "relation_discourse"
+    ],
+    "8426": [
+      "uncategorized_content"
+    ],
+    "8533": [
+      "event_action"
+    ],
+    "856": [
+      "uncategorized_content"
+    ],
+    "8590": [
+      "task_instruction"
+    ],
+    "8599": [
+      "relation_discourse"
+    ],
+    "8863": [
+      "entity_domain",
+      "state_affect"
+    ],
+    "8903": [
+      "entity_domain",
+      "state_affect"
+    ],
+    "8964": [
+      "uncategorized_content"
+    ],
+    "9005": [
+      "uncategorized_content"
+    ],
+    "9144": [
+      "quantity_math_code"
+    ],
+    "9216": [
+      "uncategorized_content"
+    ],
+    "937": [
+      "uncategorized_content"
+    ],
+    "9373": [
+      "task_instruction"
+    ],
+    "9382": [
+      "relation_discourse"
+    ],
+    "9449": [
+      "quantity_math_code"
+    ],
+    "953": [
+      "uncategorized_content"
+    ],
+    "9542": [
+      "uncategorized_content"
+    ],
+    "9580": [
+      "entity_domain"
+    ],
+    "969": [
+      "entity_domain"
+    ],
+    "9693": [
+      "uncategorized_content"
+    ],
+    "9728": [
+      "entity_domain",
+      "quantity_math_code"
+    ],
+    "9958": [
+      "uncategorized_content"
+    ],
+    "9978": [
+      "relation_discourse"
+    ],
+    "9994": [
+      "task_instruction"
+    ],
+    "9997": [
+      "task_instruction"
+    ]
+  },
+  "sae_feature_count": 245,
+  "sae_feature_ids": [
+    "5439",
+    "17904",
+    "969",
+    "12360",
+    "20475",
+    "4673",
+    "18790",
+    "20108",
+    "20455",
+    "7571",
+    "2051",
+    "5189",
+    "708",
+    "654",
+    "5067",
+    "16426",
+    "9728",
+    "18510",
+    "4632",
+    "6538",
+    "8903",
+    "8863",
+    "12195",
+    "1708",
+    "4975",
+    "16827",
+    "18580",
+    "11365",
+    "4101",
+    "3076",
+    "19715",
+    "5843",
+    "14151",
+    "353",
+    "4866",
+    "17995",
+    "10842",
+    "3249",
+    "130",
+    "6408",
+    "7107",
+    "14772",
+    "4485",
+    "9994",
+    "15184",
+    "16134",
+    "11961",
+    "13063",
+    "17077",
+    "19870",
+    "15799",
+    "6140",
+    "13367",
+    "6642",
+    "9997",
+    "15772",
+    "3180",
+    "17577",
+    "14725",
+    "8323",
+    "1933",
+    "10327",
+    "1533",
+    "7283",
+    "14700",
+    "1670",
+    "9580",
+    "4847",
+    "9449",
+    "5542",
+    "416",
+    "3064",
+    "13292",
+    "3396",
+    "7058",
+    "15313",
+    "19007",
+    "11145",
+    "7231",
+    "19054",
+    "629",
+    "2536",
+    "14424",
+    "8533",
+    "4010",
+    "5225",
+    "4281",
+    "1324",
+    "9373",
+    "17797",
+    "4477",
+    "12533",
+    "1428",
+    "7310",
+    "5816",
+    "19073",
+    "15481",
+    "8375",
+    "1521",
+    "2193",
+    "3476",
+    "4637",
+    "11011",
+    "7366",
+    "12293",
+    "9978",
+    "219",
+    "5040",
+    "6774",
+    "16333",
+    "8590",
+    "461",
+    "19136",
+    "1063",
+    "2151",
+    "12323",
+    "6234",
+    "1380",
+    "5361",
+    "8599",
+    "30",
+    "6292",
+    "18687",
+    "16871",
+    "1127",
+    "12212",
+    "16999",
+    "16520",
+    "2919",
+    "767",
+    "11553",
+    "3257",
+    "12568",
+    "4521",
+    "15368",
+    "2373",
+    "79",
+    "19067",
+    "1270",
+    "19708",
+    "2307",
+    "13471",
+    "12661",
+    "17247",
+    "16902",
+    "7369",
+    "9144",
+    "13043",
+    "8135",
+    "16775",
+    "16471",
+    "1764",
+    "10600",
+    "5018",
+    "4136",
+    "6317",
+    "19487",
+    "7927",
+    "11566",
+    "7036",
+    "17749",
+    "18446",
+    "318",
+    "4097",
+    "19472",
+    "9693",
+    "13517",
+    "6896",
+    "7568",
+    "4376",
+    "281",
+    "1176",
+    "18028",
+    "11465",
+    "15407",
+    "69",
+    "2453",
+    "16989",
+    "10511",
+    "16866",
+    "11488",
+    "17324",
+    "477",
+    "18404",
+    "5259",
+    "12754",
+    "14279",
+    "16324",
+    "9542",
+    "308",
+    "19732",
+    "484",
+    "953",
+    "12169",
+    "11950",
+    "2871",
+    "17873",
+    "10951",
+    "15409",
+    "19405",
+    "5684",
+    "18",
+    "4909",
+    "9958",
+    "9005",
+    "12886",
+    "19917",
+    "856",
+    "14275",
+    "17786",
+    "937",
+    "2887",
+    "7833",
+    "11615",
+    "2593",
+    "7147",
+    "10357",
+    "15012",
+    "19645",
+    "2827",
+    "5994",
+    "8964",
+    "14041",
+    "9382",
+    "14926",
+    "492",
+    "18172",
+    "5806",
+    "9216",
+    "18712",
+    "3145",
+    "18078",
+    "8426",
+    "1607",
+    "16706",
+    "6854",
+    "7652",
+    "258",
+    "13831",
+    "290",
+    "11292",
+    "11864",
+    "10862",
+    "6049",
+    "3701"
+  ],
+  "sae_feature_labels": {
+    "10327": "problem node references",
+    "10357": "quoted dialogue tokens",
+    "10511": "reach out to someone",
+    "10600": "problem node reference followed by colon",
+    "1063": "segment-initial strategy tokens",
+    "10842": "variable value in question text",
+    "10862": "slot description text",
+    "10951": "art-related noun in context",
+    "11011": "segment-initial tokens in bullet lists",
+    "11145": "japanese food terms in context",
+    "1127": "mathematical variable in equations",
+    "11292": "segment-initial system token",
+    "11365": "math problem token",
+    "11465": "language-related responses",
+    "11488": "content-focused token in dialogue",
+    "11553": "clothing-related token contexts",
+    "11566": "typing in code context",
+    "11615": "document-related terms",
+    "1176": "voronoi diagram magic numbers",
+    "11864": "online recommendation context",
+    "11950": "professional expertise mentions",
+    "11961": "sum of first k local values on processor p",
+    "12169": "list starter tokens",
+    "12195": "segment-initial already in context",
+    "12212": "segment-initial tokens with focus words",
+    "12293": "charity-related noun in text",
+    "12323": "segment-initial tokens with management or manage",
+    "12360": "state in context",
+    "12533": "colon-after-quote tokens",
+    "12568": "reporting section tokens",
+    "12661": "revenue-focused token in financial context",
+    "1270": "json key-value pairs in code",
+    "12754": "process-related text segments",
+    "12886": "middle token in context",
+    "130": "math problem enumeration tokens",
+    "13043": "variable in code snippet",
+    "13063": "task-focused text in problem-solving context",
+    "1324": "match in context",
+    "13292": "pre-s_t delta addition context",
+    "13367": "geometry problem focus words",
+    "13471": "balaban index formula terms",
+    "13517": "action in context",
+    "1380": "toy-related token activations",
+    "13831": "segment-initial tokens with validate or validation",
+    "14041": "milk-related noun in text",
+    "14151": "math variable in problem context",
+    "14275": "prepositional phrase with for",
+    "14279": "recipe ingredient list continuation",
+    "1428": "verb followed by preposition to object",
+    "14424": "question answer variables",
+    "14700": "head-related noun in context",
+    "14725": "track progress or activity",
+    "14772": "molecule focus tokens",
+    "14926": "segment-initial tokens with fresh focus",
+    "15012": "reaction conditions following after",
+    "15184": "problem instruction tokens",
+    "1521": "action verbs in donation contexts",
+    "15313": "revenue growth mention",
+    "1533": "state definition queries",
+    "15368": "lambda expression focus",
+    "15407": "box in text context",
+    "15409": "celebrate small wins",
+    "15481": "cause-related token in text",
+    "15772": "math problem context with and",
+    "15799": "segment-initial tokens with stinence focus",
+    "1607": "list item start tokens",
+    "16134": "question-focused token in context",
+    "16324": "segment-initial tokens in sentences",
+    "16333": "finger-related food items",
+    "16426": "math problem answer reference",
+    "16471": "disease spread context",
+    "16520": "leaf-related nouns in text",
+    "1670": "trail-related nouns in context",
+    "16706": "introductory section tokens",
+    "16775": "mod expression in math problems",
+    "16827": "math problem question words",
+    "16866": "tone and voice descriptors",
+    "16871": "math notation in focus",
+    "16902": "math expression end",
+    "16989": "contextual influence mentions",
+    "16999": "underlined text in instructions",
+    "17077": "question word many in context",
+    "1708": "math problem variable references",
+    "17247": "odd-index negation in s_t recording",
+    "17324": "list item start with 1.  followed by as a",
+    "17577": "code-related terms in text",
+    "1764": "int value in structured text",
+    "17749": "quoted default dead phrase",
+    "17786": "whether questions in text",
+    "17797": "segment-initial tokens with surround or surrounded",
+    "17873": "clear focus token in instructional text",
+    "17904": "segment-initial tokens with world focus",
+    "17995": "segment-initial tokens with feel focus",
+    "18": "statement tokens in text",
+    "18028": "segment-initial tokens with rich focus",
+    "18078": "mod in mathematical expressions",
+    "18172": "role field tokens",
+    "18404": "model response to user query",
+    "18446": "mod 7 expression end",
+    "18510": "problem node_x and operation",
+    "18580": "reference tokens in text",
+    "18687": "disc sequence in puzzle context",
+    "18712": "local context tokens",
+    "18790": "alive in context of founder survival",
+    "19007": "subproblem reference followed by comma",
+    "19054": "variable assignment list",
+    "19067": "verb followed by preposition",
+    "19073": "gift-related token in context",
+    "19136": "chemical structure context tokens",
+    "1933": "citizenship/citizens in text",
+    "19405": "real-time token context",
+    "19472": "product selection criteria",
+    "19487": "flexible in context",
+    "19645": "standard in reaction context",
+    "19708": "noun followed by adjective",
+    "19715": "variable definition in problem context",
+    "19732": "comparative conditionals with greater",
+    "19870": "token with to or need as focus word",
+    "19917": "scale rating context",
+    "20108": "drug-related context tokens",
+    "20455": "math problem reference tokens",
+    "20475": "update in algorithm context",
+    "2051": "noun followed by instruction",
+    "2151": "move sequence formatting",
+    "219": "light-related noun in context",
+    "2193": "variable value mention in text",
+    "2307": "problem node references in text",
+    "2373": "theme-related text patterns",
+    "2453": "cast noun in context",
+    "2536": "noun in context of maintenance",
+    "258": "segment-initial tokens with focus words",
+    "2593": "contextual token with iq focus",
+    "281": "segment-initial tokens with warm focus",
+    "2827": "elevator pitch tokens",
+    "2871": "focus word in quoted context",
+    "2887": "beach turtle descriptions",
+    "290": "domain-specific text",
+    "2919": "opening parenthesis in code context",
+    "30": "proper noun followed by common noun",
+    "3064": "token with activation value and offset",
+    "3076": "define in mathematical context",
+    "308": "angle-related tokens",
+    "3145": "special magic numbers query",
+    "318": "professional term in context",
+    "3180": "math definition tokens",
+    "3249": "rule language segment",
+    "3257": "variable assignment value extraction",
+    "3396": "chemical formula focus",
+    "3476": "segment-initial tokens with easy focus",
+    "353": "math competition context tokens",
+    "3701": "scene perspective descriptors",
+    "4010": "watch-related noun phrases",
+    "4097": "stand in sentence context",
+    "4101": "alarm context tokens",
+    "4136": "trajectory-related context",
+    "416": "segment-initial tokens with -world focus",
+    "4281": "empathy-related noun in context",
+    "4376": "call-to-action verbs in text",
+    "4477": "video-related text context",
+    "4485": "contextual instruction phrases",
+    "4521": "ab in context of alcoholism prevention",
+    "461": "text segment with dry as focus word",
+    "4632": "math expression delimiter",
+    "4637": "pain-related token contexts",
+    "4673": "record in text context",
+    "477": "show in context",
+    "484": "token with determined in context",
+    "4847": "person-focused context tokens",
+    "4866": "3d coordinate triplets with atomic labels",
+    "4909": "weathering techniques description",
+    "492": "descriptive noun phrase",
+    "4975": "recent context tokens",
+    "5018": "variable assignment chain context",
+    "5040": "reaction use context",
+    "5067": "type variable reference in type inference",
+    "5189": "segment-initial tokens with choose",
+    "5225": "ipad in context of internet access",
+    "5259": "green in text context",
+    "5361": "feature-related token context",
+    "5439": "describe whats happening as",
+    "5542": "named person in text",
+    "5684": "name in text context",
+    "5806": "job posting related nouns",
+    "5816": "elif in conditional logic",
+    "5843": "pdb atom coordinate focus",
+    "5994": "focus token in context",
+    "6049": "list item continuation tokens",
+    "6140": "segment-initial tokens with goal focus",
+    "6234": "sleep-related context tokens",
+    "629": "use in bullet points",
+    "6292": "integer expressions in math problems",
+    "6317": "contextual token within phrases",
+    "6408": "summer in context",
+    "6538": "math problem vertices reference",
+    "654": "condition-related tokens",
+    "6642": "segment-initial instruction tokens",
+    "6774": "anxiety-related token activations",
+    "6854": "future-focused sentence fragments",
+    "6896": "organization mentions in text",
+    "69": "experiment in context",
+    "7036": "numerical rating in text",
+    "7058": "order in sentence context",
+    "708": "segment-initial tokens with means focus",
+    "7107": "segment-initial tokens with where focus",
+    "7147": "when clause initiation",
+    "7231": "delta in algorithm context",
+    "7283": "output token context in question-answer format",
+    "7310": "size-related text patterns",
+    "7366": "math expression follow-up question",
+    "7369": "coin-related probability terms",
+    "7568": "list item starter tokens",
+    "7571": "reaction context tokens",
+    "7652": "questioned entity in discourse",
+    "767": "language learning context tokens",
+    "7833": "special token in text segments",
+    "79": "market-related noun phrases",
+    "7927": "noun in sentence context",
+    "8135": "trello feature mentions",
+    "8323": "molecule focus character",
+    "8375": "segment-initial tokens with tips focus",
+    "8426": "blend of genres or styles",
+    "8533": "release-related tokens",
+    "856": "named entity in bold",
+    "8590": "question word how in queries",
+    "8599": "segment-initial tokens with practices or practice",
+    "8863": "reaction condition selection context",
+    "8903": "conditions text patterns",
+    "8964": "select in conditional clauses",
+    "9005": "term-focused text segments",
+    "9144": "flow algorithm tokens",
+    "9216": "focus-driven query tokens",
+    "937": "noun following who or chi",
+    "9373": "problem node answer subtraction",
+    "9382": "rock-related terms in text",
+    "9449": "variable assignment values",
+    "953": "segment-initial tokens with prior focus",
+    "9542": "residue position analysis",
+    "9580": "molecular carbon atom context",
+    "969": "mass in context",
+    "9693": "individual noun in sentence",
+    "9728": "state_s_question_index",
+    "9958": "action verbs in instructions",
+    "9978": "vintage-related noun phrases",
+    "9994": "segment-initial problem tokens",
+    "9997": "problem-focused tokens in context"
+  },
+  "schema_version": "vicuna.rmt_span_selector.feature_manifest.v1",
+  "source_hash": "sha256:70e21a688d39f4a591d6a9e43448584b8bb9dc55e345549075b97c8a5f8d86cb",
+  "source_path": "/mnt/disk-3tb/rmt-tail-runs/bootstrap-20260511-223726/training/sae_l07_resid_pre_topk8x_resample_20260515-044558/feature_identification_20260521_full/rmt_span_preservation_final_corrected_20260527/final_rmt_span_preservation_features.jsonl",
+  "split_policy": "train_scalers_train_only_dev_calibration_heldout_final_only"
+}

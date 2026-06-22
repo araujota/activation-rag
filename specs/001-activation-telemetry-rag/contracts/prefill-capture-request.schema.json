@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "activation_rag.prefill_capture_request.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "capture_run_id",
+    "chunk_id",
+    "document_id",
+    "text",
+    "text_hash",
+    "prompt_text",
+    "provider_id",
+    "model_id",
+    "site_id",
+    "layer_selection_policy",
+    "prompt_template_id",
+    "prompt_template_hash",
+    "normalization_policy",
+    "capture_phase",
+    "generation_disabled"
+  ],
+  "properties": {
+    "schema_version": { "const": "activation_rag.prefill_capture_request.v1" },
+    "capture_run_id": { "type": "string" },
+    "chunk_id": { "type": "string" },
+    "document_id": { "type": "string" },
+    "ordinal": { "type": "integer" },
+    "text": { "type": "string" },
+    "text_hash": { "type": "string" },
+    "token_count_estimate": { "type": "integer", "minimum": 0 },
+    "prompt_text": { "type": "string" },
+    "provider_id": { "type": "string" },
+    "model_id": { "type": "string" },
+    "site_id": { "type": "string" },
+    "layer_selection_policy": { "type": "string" },
+    "prompt_template_id": { "type": "string" },
+    "prompt_template_hash": { "type": "string" },
+    "normalization_policy": { "type": "string" },
+    "capture_phase": { "const": "prefill" },
+    "generation_disabled": { "const": true }
+  }
+}

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "activation-rag"
+version = "0.1.0"
+description = "Experimental RAG engine with chunk-aligned activation telemetry representations."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Activation RAG contributors" }]
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+embeddings = ["sentence-transformers>=3.0.0"]
+benchmarks = ["datasets>=5.0.0"]
+research = ["numpy>=1.26"]
+supervised = ["datasets>=5.0.0", "scikit-learn>=1.4", "sentence-transformers>=3.0.0", "torch>=2.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/activation_rag"]

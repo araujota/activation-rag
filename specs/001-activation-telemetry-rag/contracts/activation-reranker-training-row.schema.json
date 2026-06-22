@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Activation reranker training row",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "dataset_name",
+    "split",
+    "query_id",
+    "query_text",
+    "query_activation_chunk_id",
+    "target_mode",
+    "qrel_positive_doc_ids",
+    "positive_chunk_ids",
+    "hard_negative_chunk_ids",
+    "activation_feature_reference",
+    "telemetry_cache_dir"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "activation_rag.activation_reranker_training_row.v1"
+    },
+    "dataset_name": {
+      "type": "string"
+    },
+    "split": {
+      "type": "string"
+    },
+    "query_id": {
+      "type": "string"
+    },
+    "query_text": {
+      "type": "string"
+    },
+    "query_activation_chunk_id": {
+      "type": "string"
+    },
+    "target_mode": {
+      "enum": [
+        "teacher_forced_answer_span",
+        "pooled_answer_chunk",
+        "contrastive_answer_chunk"
+      ]
+    },
+    "qrel_positive_doc_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "positive_chunk_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "hard_negative_chunk_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "activation_feature_reference": {
+      "const": "telemetry_cache_json_by_chunk_id"
+    },
+    "telemetry_cache_dir": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,66 @@
+{
+  "schema_version": "activation_rag.capture_permutation_plan.v1",
+  "created_at": "2026-06-13",
+  "feature_manifest_path": "external/vicuna-longmem/feature_manifest.json",
+  "feature_set_id": "core245_corrected_longmem_query_conditioned_train_dev",
+  "primary_capture_command": "python3 scripts/capture_qwen_sae_prefill.py {input_jsonl} {output_jsonl} --host root@vicuna-host --device cuda",
+  "runtime_note": "On 2026-06-13 vicuna-host was reachable, but the NVIDIA kernel module was unavailable under kernel 6.17.0-35-generic. The host was later restored with a working NVIDIA driver/CUDA path, enabling the Qwen/RMT/SAE smoke and SciFact recapture.",
+  "permutations": [
+    {
+      "id": "qwen_l07_core245_raw_max",
+      "status": "primary",
+      "capture_provider_id": "qwen-rmt-sae-prefill-core245",
+      "model_id": "qwen3-4b-rmt-sae",
+      "site_id": "l07_resid_pre",
+      "aggregation": "selected_sae_max_over_prompt_tokens",
+      "feature_family": "raw selected SAE feature IDs",
+      "rationale": "Matches the longmem selector primitive most directly and preserves the sparse causal feature representation."
+    },
+    {
+      "id": "qwen_l07_core245_log1p_l2",
+      "status": "post_capture_transform",
+      "depends_on": "qwen_l07_core245_raw_max",
+      "feature_family": "log1p selected SAE values with per-row L2 normalization",
+      "rationale": "Controls extreme-value dominance from always-on high-mass features and reduces hubness in sparse nonnegative space."
+    },
+    {
+      "id": "qwen_l07_core245_causal_weighted_category",
+      "status": "post_capture_transform",
+      "depends_on": "qwen_l07_core245_raw_max",
+      "feature_family": "category active count, total mass, max value, and causal-effect weighted mass",
+      "rationale": "Uses the manifest's semantic categories and causal effects while reducing 245 sparse IDs into stable low-dimensional groups."
+    },
+    {
+      "id": "qwen_l07_core245_high_effect_topk",
+      "status": "post_capture_transform",
+      "depends_on": "qwen_l07_core245_raw_max",
+      "feature_family": "top causal-effect raw SAE IDs",
+      "rationale": "Tests whether the strongest causal-support features carry most of the reranking signal without all 245 dimensions."
+    },
+    {
+      "id": "qwen_l07_core245_df_filtered",
+      "status": "post_capture_transform",
+      "depends_on": "qwen_l07_core245_raw_max",
+      "feature_family": "document-frequency filtered SAE IDs",
+      "rationale": "Drops ubiquitous features that behave like activation-space hubs and near-constant document priors."
+    },
+    {
+      "id": "qwen_l07_core245_counterfactual_matched",
+      "status": "control",
+      "depends_on": "qwen_l07_core245_raw_max",
+      "feature_family": "random feature groups matched to semantic category sizes",
+      "rationale": "Required control: semantic/category gains must beat same-width nonsemantic groups."
+    },
+    {
+      "id": "deepseek_section_prefill_summary_proxy",
+      "status": "negative_control_existing",
+      "feature_family": "old act:{site}:{window}:{stat} summary vectors",
+      "rationale": "Retain only as a proxy/negative-control path because it is not compatible with the longmem core245 SAE manifest."
+    }
+  ],
+  "promotion_gate": {
+    "minimum": "Beat dense baseline by paired query-level nDCG/MRR with no Recall@10 loss.",
+    "target": "Beat the strongest text reranker on the same dense candidate groups.",
+    "control_requirement": "Semantic/category variants must beat matched counterfactual groups, not merely dense."
+  }
+}
