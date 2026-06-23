@@ -517,6 +517,149 @@ Reasons for caution:
 
 The right interpretation is that we have a decisive and promising reranking result in high-structure expert evidence retrieval, bounded by the duplicate-evidence audit and by the fact that this is a reranking method rather than a finished universal retrieval system.
 
+## Feature Attribution And Student Distillation
+
+After the main benchmark runs, we ran two follow-up diagnostics:
+
+1. Which Core245 SAE features actually drive the behavior-prefill MLP?
+2. Can a cheaper no-activation student reranker imitate the behavior-prefill reranker?
+
+### Feature Attribution
+
+The attribution utility loaded the released general behavior-latent checkpoint and reconstructed the SciFact, LegalBench-RAG, and R2MED robust heldout examples. It measured feature contribution with four lenses:
+
+- first-layer input weight magnitude,
+- gradient-times-input attribution,
+- permutation importance by nDCG@10 drop,
+- keep-top-k SAE subset curves.
+
+The key finding is mixed but useful. The MLP relies heavily on dense retrieval metadata, but Core245 still adds real lift.
+
+| Arm | nDCG@10 |
+| --- | ---: |
+| Raw dense candidate order | 0.3911 |
+| Behavior MLP with dense metadata but all SAE features ablated to train means | 0.7164 |
+| Behavior MLP with all Core245 SAE features | 0.7773 |
+
+So the released artifact is not a pure activation-only reranker. Dense score and rank metadata provide a strong base inside the MLP. But the activation features still add `+0.0610` nDCG@10 over that dense-metadata-only ablation and are part of the full result.
+
+Feature trimming is plausible but not extreme:
+
+| SAE Features Kept | nDCG@10 |
+| ---: | ---: |
+| 16 | 0.7399 |
+| 32 | 0.7381 |
+| 64 | 0.7555 |
+| 96 | 0.7629 |
+| 128 | 0.7683 |
+| 192 | 0.7740 |
+| 245 | 0.7773 |
+
+Interpretation: a future retrain could probably target a 96- to 128-feature Core subset, but the current checkpoint does not support trimming down to only a tiny handful of features without losing meaningful ranking quality.
+
+The most influential labeled SAE features were not narrow legal or medical features. They were mostly general answer-binding, task/instruction, relation/discourse, and structured quantity/code features. Top examples included:
+
+| Feature ID | Label | Category |
+| --- | --- | --- |
+| 9449 | variable assignment values | quantity_math_code |
+| 767 | language learning context tokens | relation_discourse |
+| 16426 | math problem answer reference | task_instruction / relation_discourse / quantity_math_code |
+| 14424 | question answer variables | task_instruction |
+| 9373 | problem node answer subtraction | task_instruction |
+| 19715 | variable definition in problem context | task_instruction / quantity_math_code |
+
+This supports the behavioral interpretation: the model seems to use telemetry related to answer binding, task framing, discourse structure, and support-like relations, rather than a single obvious domain keyword feature.
+
+### No-Activation Student Reranker
+
+We then trained a student neural reranker to imitate the behavior-prefill teacher without using activation telemetry at inference. The student sees only cheap features:
+
+- dense score,
+- dense z-score,
+- dense reciprocal/log rank,
+- query and candidate length,
+- unigram and bigram overlap,
+- exact query substring indicators,
+- numeric overlap.
+
+The cleanest student was trained with pure teacher distillation:
+
+- listwise KL to match the teacher's per-query candidate distribution,
+- margin-MSE to match teacher score differences within each query,
+- no relevance-label regularization,
+- checkpoint selected by dev teacher KL rather than dev relevance.
+
+Combined heldout results:
+
+| Model | nDCG@10 | MRR@10 | Recall@10 |
+| --- | ---: | ---: | ---: |
+| Dense candidate order | 0.3911 | n/a | n/a |
+| Behavior-prefill teacher | 0.7773 | 0.7617 | 0.9096 |
+| No-activation student | 0.7848 | 0.7708 | 0.9052 |
+
+The student's `+0.0075` nDCG@10 over the teacher was not significant (`p=0.2681`), so this should be interpreted as parity, not a student win. Against Ettin, however, the student remained strongly ahead on the combined benchmark set: `+0.2054` nDCG@10, p approximately `0.0001`.
+
+Per-dataset nDCG@10:
+
+| Dataset | Teacher | Student |
+| --- | ---: | ---: |
+| SciFact | 0.8016 | 0.7905 |
+| LegalBench-RAG | 0.7510 | 0.7659 |
+| R2MED | 0.8616 | 0.8716 |
+
+This result changes the cost story. It suggests that the behavior-prefill reranker may be compressible into a much cheaper student for the same benchmark family and frozen candidate setup. It does not prove that the original activation telemetry was unnecessary. The student learned from telemetry-generated teacher scores; the telemetry system produced the soft ranking policy.
+
+The production implication is important:
+
+- use behavior-prefill telemetry as a high-quality teacher and adjudicator,
+- distill its judgments into cheaper students for ordinary traffic,
+- reserve runtime telemetry for high-risk, hard, out-of-distribution, or audit-required queries,
+- periodically refresh the student from newly scored telemetry examples.
+
+The next validation question is whether this no-activation student transfers to new domains and coding-retrieval tasks as well as the telemetry teacher. Until that is tested, the student is best viewed as a cost-amortization path, not a replacement for the research claim.
+
+Important correction: this artifact is now classified as a tabular surrogate, not the intended "student reranker." It consumes dense score/rank and handcrafted lexical features. That makes it useful as a cost diagnostic, but it is not equivalent to a normal reranker such as Ettin. In candidate groups with appended positives, dense-rank features can become protocol artifacts. The proper student-reranker test is a text-only cross-encoder that consumes only query text and candidate text.
+
+### Text-Only Student Reranker
+
+We corrected the protocol and trained a conventional text-only cross-encoder student:
+
+- backbone: `cross-encoder/ettin-reranker-17m-v1`,
+- inputs: query text and candidate text only,
+- forbidden inputs: activation telemetry, dense score, dense rank, labels, candidate position, provenance, and handcrafted lexical features,
+- teacher: behavior-prefill reranker scores,
+- loss: pointwise score MSE, listwise KL, and Margin-MSE over within-query score differences.
+
+Two APPS evaluations were run.
+
+First, we trained the text-only student on non-coding behavior-prefill teacher scores from SciFact, LegalBench-RAG, and R2MED, then evaluated zero-shot on the full APPS heldout slate. This is the cleanest test of whether a conventional reranker can inherit the behavior-prefill APPS advantage without seeing APPS data.
+
+| Method | MRR@10 | nDCG@10 | Recall@10 |
+| --- | ---: | ---: | ---: |
+| Dense | 0.0481 | 0.0572 | 0.0866 |
+| Ettin | 0.5666 | 0.6418 | 0.8834 |
+| Text-only student, non-coding train | 0.2454 | 0.3460 | 0.6818 |
+| Behavior-prefill teacher | 0.9236 | 0.9339 | 0.9676 |
+
+This failed as a zero-shot replacement. The student beat dense but was far below Ettin and far below the behavior-prefill teacher.
+
+Second, we asked whether the behavior-prefill APPS policy is distillable within distribution. We split APPS query groups into 2,636 train, 376 dev, and 753 heldout test queries. The text-only student trained on APPS teacher scores and was evaluated once on the APPS test split.
+
+| Method | MRR@10 | nDCG@10 | Recall@10 |
+| --- | ---: | ---: | ---: |
+| Dense | 0.0448 | 0.0534 | 0.0810 |
+| Ettin | 0.5623 | 0.6370 | 0.8765 |
+| Text-only student, APPS-specific | 0.8348 | 0.8695 | 0.9774 |
+| Behavior-prefill teacher | 0.9292 | 0.9384 | 0.9681 |
+
+The APPS-specific student decisively beat Ettin: `+0.2326` nDCG@10, p approximately `0.0001`. It still trailed the behavior-prefill teacher by `-0.0689` nDCG@10, also significant.
+
+Interpretation:
+
+- The behavior-prefill APPS signal is not automatically captured by a conventional text-only reranker trained on non-coding data.
+- But behavior-prefill can generate domain-specific teacher scores that train a much cheaper text-only reranker which beats Ettin decisively on heldout APPS.
+- The production path is therefore not "replace telemetry with a universal student." It is "use telemetry as a high-quality teacher/adjudicator, then distill domain-specific students where enough teacher-scored data exists."
+
 ## Cost And Production Implications
 
 The current method is expensive because it requires prefill telemetry for every reranked query/candidate pair. For a query with 16 candidates, the naive version performs 16 zero-token prefill passes:
@@ -562,7 +705,7 @@ The production system should use:
 
 - Cascading retrieval to reduce candidate count before telemetry.
 - Confidence gating so easy queries skip behavior scoring.
-- Prefix caching so repeated query/instruction prefix tokens are not recomputed for every candidate.
+- Prefix caching only after paired equivalence tests prove that cached execution reproduces the uncached layer-7 SAE vector. Our first implementation produced cache hits but changed the feature vector, so it is not production-safe yet.
 - A dedicated prefill-only scoring service with no decode path.
 - Continuous batching and paged KV cache for high GPU utilization.
 - A truncated telemetry model that stops at layer 7 rather than running the full model.
@@ -570,7 +713,48 @@ The production system should use:
 - Pair-score caching keyed by query hash, candidate chunk hash, prompt template, model version, feature manifest, and corpus version.
 - Student distillation so a smaller reranker handles ordinary traffic while the expensive behavior scorer handles hard/high-risk cases and labels new training data.
 
-Modern serving stacks already support several relevant primitives. Prefix caching avoids recomputing shared prompt prefixes, and high-throughput engines such as vLLM and SGLang are designed around KV-cache reuse and continuous batching. Disaggregated prefill/decode serving is also a natural fit because this method needs prefill only, not generation. References: [vLLM prefix caching](https://docs.vllm.ai/en/stable/design/prefix_caching/), [SGLang RadixAttention](https://lmsys.org/blog/2024-01-17-sglang/), [TensorRT-LLM disaggregated serving](https://nvidia.github.io/TensorRT-LLM/blogs/tech_blog/blog5_Disaggregated_Serving_in_TensorRT-LLM.html), [FlashInfer](https://github.com/flashinfer-ai/flashinfer), and [ColBERT](https://arxiv.org/abs/2004.12832).
+Modern serving stacks already support several relevant primitives. vLLM is built around PagedAttention, continuous batching, chunked prefill, prefix caching, and CUDA/HIP graph execution; SGLang's RadixAttention keeps reusable KV cache entries in a radix tree; and Hugging Face's cache guidance covers static KV caches that can make compiled inference practical. The caution for this project is that telemetry is not ordinary answer generation: any serving optimization must reproduce the exact hidden-state/SAE feature contract, not merely produce equivalent next-token logits. References: [vLLM docs](https://docs.vllm.ai/), [SGLang RadixAttention](https://lmsys.org/blog/2024-01-17-sglang/), and [Hugging Face KV cache docs](https://huggingface.co/docs/transformers/en/kv_cache).
+
+### Maximum-Speed Production Design
+
+The fastest credible production design is not "run the current Python script faster." It is a dedicated resident telemetry service with a strict equivalence gate.
+
+The service should keep the Qwen/RMT/SAE stack resident on GPU and expose one endpoint: score canonical query+candidate prompts with zero output tokens. The request should include query ID, candidate IDs, prompt-template hash, model/feature-manifest versions, corpus version, and risk tier. The service should return the compact Core245 feature vector plus the MLP score, not raw hidden states.
+
+The serving path should be:
+
+1. Dense/lexical retrieval produces a broad candidate pool.
+2. Ettin or a cheaper domain reranker reduces the slate to the hardest candidates.
+3. A risk/uncertainty gate decides whether behavior telemetry is worth the cost.
+4. The telemetry service scores only the remaining hard candidates.
+5. Pair scores are cached under a versioned key: normalized query hash, candidate chunk hash, prompt-template hash, model checkpoint, SAE manifest, and corpus version.
+6. Accepted telemetry scores are logged as distillation data for future cheap students.
+
+The runtime should prioritize these optimizations in order:
+
+1. **Layer truncation:** stop immediately after layer 7. This is already validated and exactly preserves the signal.
+2. **Resident workers:** avoid per-request model startup. Our benchmark wrapper's wall time is dominated by loading; production should price the in-process timing.
+3. **Candidate count reduction:** reduce from 100 dense candidates to 8-20 hard candidates before telemetry whenever policy permits.
+4. **Compiled/fused layer-0-through-layer-7 path:** export or hand-build the exact prefix of Qwen needed for `l07_resid_pre`, then fuse SAE normalization/top-k/max-pooling so the service never materializes or serializes unnecessary tensors.
+5. **Batch-invariant batching:** implement batching only if an equivalence suite proves that batched execution yields the same Core245 feature vector as single-prompt execution. Our naive HF batched run changed the selected SAE vector, including duplicate-prompt batches, so default production must not use non-exact batching.
+6. **Exact prefix reuse:** implement KV/prefix reuse only if it reproduces the uncached layer-7 activations. Our first query-prefix cache changed feature values, so this is future work, not a current optimization.
+7. **Multi-GPU data parallelism:** if exact batching remains hard, replicate resident telemetry workers across GPUs and shard candidates by query. This is less elegant than batching but preserves single-prompt semantics.
+8. **Student cascade:** train domain-specific text-only students from telemetry teacher scores so most traffic avoids telemetry entirely. Keep telemetry for high-stakes/hard cases and for generating fresh training labels.
+
+Approximate cost envelope from the current Vicuna measurements:
+
+- Full Qwen forward over 100 candidates: about `2.7s` in-process.
+- Valid layer-7 early-stop over 100 candidates: about `0.8s` in-process.
+- Naive true batch-8 looked faster in a microbenchmark, but failed feature-equivalence checks and is not acceptable as a production default.
+- With a resident service, candidate gating to 8-20 candidates is more valuable than unsafe batching: it moves behavior telemetry from roughly `0.8s/100 candidates` to roughly `60-160ms` of layer-7 prefill compute at the same measured throughput, before service overhead.
+
+The engineering target is therefore:
+
+```text
+dense/lexical retrieval -> cheap reranker -> risk gate -> exact layer-7 resident telemetry on 8-20 candidates -> final evidence
+```
+
+Under that design, behavior-prefill reranking is not a universal high-QPS reranker. It is a high-precision adjudication tier for cases where the extra 100-300ms can buy materially better evidence selection.
 
 ### Where It Matters
 

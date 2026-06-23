@@ -127,7 +127,8 @@ The intended pipeline is:
 
 1. Retrieve a dense or dense+lexical candidate slate.
 2. Build a query/candidate support prompt for each candidate.
-3. Run zero-token prefill through the telemetry model.
+3. Run zero-token prefill through the telemetry model with layer-7 early-stop
+   enabled.
 4. Extract Qwen layer-7 Core245 SAE activations.
 5. Feed the transformed telemetry plus dense metadata into this MLP.
 6. Sort candidates by the MLP support score.
@@ -194,7 +195,19 @@ Answer support:
 ```
 
 Telemetry capture must be zero-output-token prefill. The system should not
-generate an answer during scoring.
+generate an answer during scoring. Use the truncated capture path for reranking:
+
+```bash
+python scripts/capture_qwen_sae_prefill.py REQUESTS.jsonl ROWS.jsonl \
+  --capture-execution-mode early_stop_layer \
+  --optimized-batch-size 8
+```
+
+The requested optimized batch size is `8`, but exact production capture currently
+forces effective batch size `1` unless `--allow-nonexact-batched-prefill` is
+explicitly passed. Do not enable non-exact batching or prefix-cache capture for
+reported reranking unless paired equivalence tests show the same Core245 feature
+vectors as single-prompt/full-forward capture.
 
 ## Architecture
 
@@ -355,7 +368,12 @@ metadata. Raw text is not accepted by this model.
 ## Limitations
 
 - Requires the specific Qwen/RMT/SAE Core245 telemetry provider.
-- Requires query/candidate prefill scoring at inference time.
+- Requires query/candidate prefill scoring at inference time, using the
+  layer-7-truncated `early_stop_layer` capture path.
+- The capture command exposes requested optimized batch size `8`, but exact
+  production telemetry currently forces effective batch size `1`; do not use
+  `--allow-nonexact-batched-prefill` for reported reranking without a fresh
+  equivalence audit.
 - Current telemetry is max-over-prefill-token SAE-only telemetry, not full
   final-token CAA/SAE selector telemetry.
 - Evaluated as a reranker over frozen dense candidate pools, not as end-to-end

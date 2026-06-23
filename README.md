@@ -208,7 +208,7 @@ PYTHONPATH=src python scripts/capture_group_telemetry_cache.py \
   --groups runs/behavior-latent-robust-20260618/scifact/train-groups.behavior-pair.jsonl \
   --groups runs/behavior-latent-robust-20260618/scifact/dev-groups.behavior-pair.jsonl \
   --groups runs/behavior-latent-robust-20260618/scifact/test-groups.behavior-pair.jsonl \
-  --telemetry-command 'python scripts/capture_qwen_sae_prefill.py --input-jsonl {input} --output-jsonl {output}' \
+  --telemetry-command 'python scripts/capture_qwen_sae_prefill.py {input} {output} --capture-execution-mode early_stop_layer --optimized-batch-size 8' \
   --cache-dir runs/behavior-latent-robust-20260618/telemetry-cache \
   --provider-id qwen-rmt-sae-prefill \
   --model-id qwen3-4b-rmt-sae \
@@ -223,6 +223,8 @@ The important contract is:
 - output JSONL contains selector-compatible telemetry rows,
 - rows include `sae_feature_values`,
 - capture is prefill-only with zero generated tokens,
+- reranking telemetry uses `--capture-execution-mode early_stop_layer` so Qwen
+  stops immediately after the layer-7 SAE site is captured,
 - rows are keyed by stable chunk IDs.
 
 ### 3. Train The General Behavior Reranker
@@ -369,9 +371,12 @@ The intended production system is a premium evidence-adjudication tier:
 4. The behavior-latent reranker scores only the hard top candidates.
 5. The answer model receives the final evidence with a replayable audit trail.
 
-Cost mitigation should use prefix caching, continuous batching, a prefill-only
-service, layer-truncated telemetry capture, pair-score caching, and eventual
-distillation into cheaper student rankers.
+Cost mitigation should use a resident prefill-only service, validated layer-7
+early-stop telemetry capture, pair-score caching, candidate-count gating, and
+eventual distillation into cheaper student rankers. Prefix caching and true
+batched prefill must pass activation-vector equivalence checks before production
+use; the current exact path records requested batch size `8` but forces effective
+batch size `1` unless non-exact batching is explicitly allowed.
 
 ## Documentation Standards
 

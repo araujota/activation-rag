@@ -1,4 +1,6 @@
 import importlib.util
+import json
+import sys
 import unittest
 from pathlib import Path
 
@@ -76,6 +78,41 @@ class QwenSaeCaptureScriptTests(unittest.TestCase):
         self.assertTrue(row["telemetry_valid"])
         self.assertEqual(row["provenance"]["feature_set_id"], "core245")
         self.assertEqual(row["provenance"]["max_token_offset_by_feature"], {"5439": 4, "18172": 9})
+
+    def test_split_timing_summary_removes_machine_readable_line(self):
+        module = load_capture_module()
+        stderr, summary = module.split_timing_summary(
+            'warning line\nACTIVATION_RAG_QWEN_SAE_TIMING {"duration_s": 1.5, "row_count": 4}\n'
+        )
+
+        self.assertEqual(stderr, "warning line\n")
+        self.assertEqual(summary, {"duration_s": 1.5, "row_count": 4})
+
+    def test_remote_code_contains_opt_in_optimized_modes(self):
+        module = load_capture_module()
+
+        self.assertIn("early_stop_layer", module.REMOTE_CAPTURE_CODE)
+        self.assertIn("_activation_rag_stop_after_capture", module.REMOTE_CAPTURE_CODE)
+        self.assertIn("early_stop_layer_prefix_cache", module.REMOTE_CAPTURE_CODE)
+        self.assertIn("DynamicCache", module.REMOTE_CAPTURE_CODE)
+        self.assertIn("optimized_batch_size", module.REMOTE_CAPTURE_CODE)
+        self.assertIn("summarize_hidden_batch", module.REMOTE_CAPTURE_CODE)
+
+    def test_run_remote_capture_supports_local_host(self):
+        module = load_capture_module()
+        original = module.REMOTE_CAPTURE_CODE
+        module.REMOTE_CAPTURE_CODE = (
+            "import json, os, pathlib; "
+            "payload = json.loads(pathlib.Path(os.environ['ACTIVATION_RAG_QWEN_SAE_PAYLOAD']).read_text()); "
+            "print(json.dumps(payload, sort_keys=True))"
+        )
+        try:
+            completed = module.run_remote_capture("local", sys.executable, {"ok": True})
+        finally:
+            module.REMOTE_CAPTURE_CODE = original
+
+        self.assertEqual(completed.returncode, 0)
+        self.assertEqual(json.loads(completed.stdout), {"ok": True})
 
 
 if __name__ == "__main__":

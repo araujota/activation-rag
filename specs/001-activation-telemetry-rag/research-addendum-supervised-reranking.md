@@ -560,6 +560,239 @@ Decision:
 - Do not claim the full selector primitive improved RAG. The current publishable result remains SAE-only Core245 activation-aware reranking: decisive on SciFact and narrow on LegalBench-RAG.
 - Future CAA work must first produce nonzero-variance, content-sensitive strict-prefill CAA inputs. The likely options are a prefill-trained/rescored CAA bundle, raw activation capture scored by prefill-compatible feature terms, or a query+candidate final-input-token behavior-latent objective rather than isolated chunk compact traces.
 
+## Behavior-Latent Feature Attribution And Student Distillation
+
+Run date: 2026-06-23
+
+External method anchors:
+
+- Cross-encoder knowledge distillation commonly trains a smaller model to match teacher logits or scores (`https://sbert.net/examples/cross_encoder/training/distillation/README.html`).
+- Cross-architecture ranking distillation work such as Margin-MSE matches teacher score differences within a query group rather than only absolute scores (`https://arxiv.org/abs/2010.02666`, `https://github.com/sebastian-hofstaetter/neural-ranking-kd`).
+- Permutation importance estimates feature contribution by measuring evaluation degradation after shuffling a feature (`https://scikit-learn.org/stable/modules/permutation_importance.html`).
+
+Artifacts:
+
+- Feature attribution utility: `scripts/analyze_behavior_feature_importance.py`
+- Student distillation utility: `scripts/train_behavior_student_reranker.py`
+- Unit tests: `tests/test_behavior_feature_importance.py`, `tests/test_behavior_student_reranker.py`
+- Feature attribution report: `runs/behavior-latent-analysis-20260623/feature-importance-test-summary.json`
+- Label-regularized student: `runs/behavior-latent-analysis-20260623/student-reranker/`
+- Pure distillation student, selected by dev nDCG: `runs/behavior-latent-analysis-20260623/student-reranker-pure-distill/`
+- Pure distillation student, selected by dev teacher KL: `runs/behavior-latent-analysis-20260623/student-reranker-pure-distill-kl-selected/`
+
+Feature attribution design:
+
+- Load the released behavior-latent general checkpoint and reconstruct the exact query/candidate examples from the robust SciFact, LegalBench-RAG, and R2MED test groups.
+- Attribute the model with four independent lenses:
+  - normalized first-layer input weight magnitude;
+  - gradient-times-input attribution on the learned support score;
+  - query-group permutation importance measured as nDCG@10 degradation;
+  - keep-top-k SAE curves where dropped SAE dimensions are replaced by train-normalizer means while dense metadata features remain available.
+- Join Core245 feature IDs against `external/vicuna-longmem/feature_manifest.json` so results are interpretable by labeled SAE feature and category.
+
+Combined heldout attribution baseline:
+
+| Arm | nDCG@10 | MRR@10 | Recall@10 |
+| --- | ---: | ---: | ---: |
+| Dense candidate order | 0.3911 | n/a | n/a |
+| Full behavior-latent teacher | 0.7773 | 0.7617 | 0.9096 |
+
+The largest non-SAE drivers are the dense retrieval metadata features inside the MLP:
+
+| Feature | First-layer L2 | Mean abs gradient-times-input | Mean signed gradient-times-input |
+| --- | ---: | ---: | ---: |
+| `dense_z` | 5.0858 | 1.6800 | 1.4252 |
+| `dense_rank_reciprocal` | 3.1064 | 0.7559 | 0.6356 |
+| `dense_score` | 2.3956 | 0.6265 | 0.2287 |
+
+Keep-top-k SAE curve with dense metadata kept:
+
+| SAE Features Kept | nDCG@10 |
+| ---: | ---: |
+| 0 | 0.7164 |
+| 1 | 0.7220 |
+| 2 | 0.7256 |
+| 4 | 0.7340 |
+| 8 | 0.7324 |
+| 16 | 0.7399 |
+| 24 | 0.7355 |
+| 32 | 0.7381 |
+| 48 | 0.7401 |
+| 64 | 0.7555 |
+| 96 | 0.7629 |
+| 128 | 0.7683 |
+| 192 | 0.7740 |
+| 245 | 0.7773 |
+
+Interpretation:
+
+- The teacher is not "pure activations." Dense score/rank metadata supplies a large base. With all SAE features ablated to the train-normalizer mean, the trained teacher still reaches `0.7164` nDCG@10.
+- The Core245 telemetry still contributes real lift: full Core245 adds `+0.0610` nDCG@10 over the zero-SAE setting and `+0.3862` over raw dense order.
+- The activation contribution is distributed. A 16-feature or 32-feature runtime trim is too destructive for the released checkpoint. A 96- to 128-feature retrain is plausible, but the current evidence does not support trimming to only the top handful of labeled features.
+
+Top labeled SAE features by combined attribution:
+
+| Rank | Feature ID | Label | Categories | Permutation nDCG Drop |
+| ---: | --- | --- | --- | ---: |
+| 1 | 9449 | variable assignment values | quantity_math_code | 0.0112 |
+| 2 | 767 | language learning context tokens | relation_discourse | 0.0061 |
+| 3 | 16426 | math problem answer reference | task_instruction; relation_discourse; quantity_math_code | 0.0044 |
+| 4 | 14424 | question answer variables | task_instruction | 0.0057 |
+| 5 | 3701 | scene perspective descriptors | uncategorized_content | 0.0063 |
+| 6 | 9373 | problem node answer subtraction | task_instruction | 0.0052 |
+| 7 | 19708 | noun followed by adjective | relation_discourse | 0.0056 |
+| 8 | 19715 | variable definition in problem context | task_instruction; quantity_math_code | 0.0035 |
+| 9 | 9542 | residue position analysis | uncategorized_content | 0.0049 |
+| 10 | 12360 | state in context | entity_domain; relation_discourse | 0.0038 |
+
+Category-level summary:
+
+| Category | Feature Count | Combined Importance Sum | Mean Combined Importance | Permutation Drop Sum |
+| --- | ---: | ---: | ---: | ---: |
+| uncategorized_content | 87 | 17.5558 | 0.2018 | 0.1194 |
+| relation_discourse | 60 | 12.5932 | 0.2099 | 0.0658 |
+| quantity_math_code | 52 | 11.7438 | 0.2258 | 0.0963 |
+| task_instruction | 43 | 10.1403 | 0.2358 | 0.0745 |
+| entity_domain | 30 | 6.1069 | 0.2036 | 0.0420 |
+| event_action | 13 | 2.3994 | 0.1846 | 0.0144 |
+| state_affect | 7 | 1.4351 | 0.2050 | 0.0096 |
+
+The semantic content of the top features is consistent with the support-judgment prompt: instruction/task features, variable/answer-binding features, relation/discourse features, and structured quantity/code features dominate. But the labels are not cleanly domain-specific. They look like general "evidence support and answer binding" features rather than legal-only or medical-only concepts.
+
+Student distillation design:
+
+- The student reranker receives no activation telemetry at inference.
+- Inputs are dense metadata plus cheap lexical and text-shape features only: dense score, dense z-score, dense reciprocal/log rank, query/candidate length logs, token overlap, bigram overlap, exact query substring, and numeric overlap.
+- The teacher is the released behavior-prefill checkpoint scored over the same train/dev/test groups.
+- Loss is query-group distillation:
+  - listwise KL between teacher and student softmax distributions;
+  - margin-MSE between teacher and student within-query score margins;
+  - optional relevance-label cross-entropy regularization.
+- The cleanest student uses pure distillation with `label_weight=0.0` and checkpoint selection by dev teacher KL, so heldout relevance metrics are not used for model selection.
+
+Combined test results:
+
+| Model | nDCG@10 | MRR@10 | Recall@10 | Teacher Pearson | Teacher Spearman | Teacher KL |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Dense order | 0.3911 | n/a | n/a | n/a | n/a | n/a |
+| Behavior-prefill teacher | 0.7773 | 0.7617 | 0.9096 | 1.0000 | 1.0000 | 0.0000 |
+| Student, pure distill, dev nDCG selected | 0.7898 | 0.7748 | 0.9102 | 0.5248 | 0.5244 | 0.2970 |
+| Student, pure distill, dev teacher-KL selected | 0.7848 | 0.7708 | 0.9052 | 0.5805 | 0.5782 | 0.2438 |
+| Student, label-regularized | 0.7946 | 0.7816 | 0.9116 | 0.5513 | 0.5453 | 0.2848 |
+
+Dataset breakdown for the clean teacher-KL-selected pure student:
+
+| Dataset | Teacher nDCG@10 | Student nDCG@10 |
+| --- | ---: | ---: |
+| SciFact | 0.8016 | 0.7905 |
+| LegalBench-RAG | 0.7510 | 0.7659 |
+| R2MED | 0.8616 | 0.8716 |
+
+Paired audit for the clean teacher-KL-selected pure student:
+
+| Comparison | Delta nDCG@10 | p-value | Delta MRR@10 | p-value | Delta Recall@10 | p-value |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Student minus teacher | +0.0075 | 0.2681 | +0.0091 | 0.2347 | -0.0045 | 0.6312 |
+| Student minus Ettin | +0.2054 | 0.0001 | +0.2400 | 0.0001 | +0.1138 | 0.0001 |
+
+Interpretation:
+
+- The no-activation student essentially matches the behavior-prefill teacher on these frozen candidate groups. Its small positive nDCG delta over the teacher is not significant; treat this as parity, not as a student win.
+- The student decisively beats Ettin on the same combined benchmark set, but that comparison inherits the same benchmark/candidate setup as the teacher result. It is not yet evidence that cheap lexical features alone will generalize to new domains.
+- This materially changes the production story. Runtime behavior-prefill telemetry may not be necessary for every query once a telemetry teacher has produced enough soft rankings. The expensive telemetry model can become a premium teacher, audit adjudicator, and active-learning labeler, while a cheap student handles ordinary traffic.
+- It does not prove that activation telemetry was fake or unnecessary. The student was trained from behavior-prefill teacher scores, and its ability to imitate them means the teacher exposed a learnable ranking policy. The next validation question is whether the student transfers to heldout domains and coding tasks as well as the teacher.
+
+Protocol correction:
+
+The first student above is now classified as a tabular surrogate, not the intended student reranker. It does not consume activation telemetry, but it does consume dense scores/ranks and handcrafted lexical features. That creates a serious artifact risk in candidate groups with appended positives, because appended positives can carry abnormal dense-rank values. The actual student-reranker protocol must use a text-only cross-encoder that sees only `(query text, candidate text)` at inference, exactly like a normal reranker.
+
+## Text-Only Student Reranker Distillation
+
+Run date: 2026-06-23
+
+Artifacts:
+
+- Trainer: `scripts/train_text_student_reranker.py`
+- Unit tests: `tests/test_text_student_reranker.py`
+- Teacher-score cache: `runs/text-student-reranker-20260623/teacher-scores/`
+- Zero-shot APPS run: `runs/text-student-reranker-20260623/text-only-apps-zero-shot/`
+- APPS query split: `runs/text-student-reranker-20260623/apps-query-split/`
+- APPS-specific heldout run: `runs/text-student-reranker-20260623/text-only-apps-specific/`
+- Paired audits: `runs/text-student-reranker-20260623/audits/`
+- Vicuna environment: `/mnt/disk-1tb/activation-rag-text-student/venvs/text-student`
+
+Design:
+
+- Backbone: `cross-encoder/ettin-reranker-17m-v1`
+- Inference inputs: query text and candidate text only.
+- Forbidden inputs: activation telemetry, dense score, dense rank, labels, candidate position, provenance, and handcrafted lexical features.
+- Loss:
+  - pointwise MSE on within-query z-scored teacher/student scores;
+  - listwise KL over within-query softmax distributions;
+  - Margin-MSE over within-query score differences.
+- Teacher: released behavior-prefill reranker scores.
+- Training hardware: Vicuna host CUDA, RTX 5080.
+
+Zero-shot APPS transfer:
+
+- Train data: non-coding behavior-prefill teacher scores from SciFact, LegalBench-RAG, and R2MED robust train groups.
+- Dev data: non-coding robust dev groups.
+- Heldout eval: full APPS candidate slate from the coding retrieval suite.
+- This preserves the key condition that the behavior-prefill teacher had for the original APPS result: no APPS training.
+
+| Method | MRR@10 | nDCG@10 | Recall@10 |
+| --- | ---: | ---: | ---: |
+| Dense | 0.0481 | 0.0572 | 0.0866 |
+| Ettin | 0.5666 | 0.6418 | 0.8834 |
+| Text-only student, non-coding train | 0.2454 | 0.3460 | 0.6818 |
+| Behavior-prefill teacher | 0.9236 | 0.9339 | 0.9676 |
+
+Paired APPS full-slate audits:
+
+| Comparison | Delta nDCG@10 | p-value | Changed-query summary |
+| --- | ---: | ---: | --- |
+| Student minus Ettin | -0.2958 | 0.0001 | 903 improved / 2,518 harmed / 344 unchanged |
+| Student minus behavior teacher | -0.5880 | 0.0001 | 88 improved / 3,186 harmed / 491 unchanged |
+
+Interpretation:
+
+- The text-only student does not zero-shot transfer to APPS from non-coding distillation data.
+- It beats dense, so the model learned a general reranking signal, but it is far below Ettin and far below the behavior-prefill teacher.
+- This is the clean answer to the user's concern: a conventional decoupled reranker does not automatically inherit the behavior-prefill APPS advantage.
+
+APPS-specific heldout distillation:
+
+Because APPS had only one local train group and one local dev group in the existing prepared artifact, the full APPS heldout slate was deterministically re-split by query into:
+
+| Split | Query Count |
+| --- | ---: |
+| Train | 2,636 |
+| Dev | 376 |
+| Test | 753 |
+
+The same text-only student protocol was then trained on APPS train teacher scores, selected on APPS dev teacher KL, and evaluated once on APPS test.
+
+| Method | MRR@10 | nDCG@10 | Recall@10 |
+| --- | ---: | ---: | ---: |
+| Dense | 0.0448 | 0.0534 | 0.0810 |
+| Ettin | 0.5623 | 0.6370 | 0.8765 |
+| Text-only student, APPS-specific | 0.8348 | 0.8695 | 0.9774 |
+| Behavior-prefill teacher | 0.9292 | 0.9384 | 0.9681 |
+
+Paired APPS-specific heldout audits:
+
+| Comparison | Delta nDCG@10 | p-value | Delta Recall@10 | p-value | Changed-query summary |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Student minus Ettin | +0.2326 | 0.0001 | +0.1009 | 0.0001 | 382 improved / 95 harmed / 276 unchanged |
+| Student minus behavior teacher | -0.0689 | 0.0001 | +0.0093 | 0.3489 | 54 improved / 156 harmed / 543 unchanged |
+
+Interpretation:
+
+- The behavior-prefill APPS ranking policy is distillable into a conventional text-only cross-encoder when the student sees APPS-distribution teacher scores.
+- The distilled text-only student decisively beats Ettin on APPS heldout, but it remains significantly below the behavior-prefill teacher on rank quality.
+- This supports a production cascade: use behavior-prefill telemetry as a high-cost teacher/adjudicator to generate domain-specific student training data, then deploy a cheap text-only student for most traffic.
+- It does not support a universal no-telemetry replacement. Cross-domain zero-shot transfer failed; the student needed APPS-specific teacher supervision to beat Ettin.
+
 ## Negative Policy
 
 Hard negatives:
@@ -2026,3 +2259,52 @@ Agentic coding implications:
 - The result is most applicable to cascaded coding-agent retrieval: cheap repository/dense/lexical/symbol search gets plausible snippets into a slate, then behavior-prefill reranking selects the snippets that actually support the task.
 - The main qualification is that APPS uses appended positives when dense misses the target, so this is evidence for final-stage reranking/evidence selection, not standalone full-corpus retrieval.
 - The negative StackOverflow-QA and CodeTrans-Contest results are diagnostic rather than fatal. They indicate that the current artifact is not a generic accepted-answer reranker or exact translation-pair matcher. Its strength appears to be operational support detection.
+
+## Behavior-Prefill Reranking Speed Optimization
+
+Run date: 2026-06-23
+
+Artifact:
+
+- `runs` equivalent on Vicuna: `/mnt/disk-1tb/activation-rag-speed-20260623/scifact-q10-c16-v2/speed-summary.json`
+
+Protocol:
+
+- Candidate slate: SciFact behavior-pair test groups, first 10 queries, first 16 candidates per query, 160 query/candidate prompts total.
+- Telemetry model: Qwen/RMT/SAE Core245, layer-7 `resid_pre`, `qwen_seq_tokens=128`, strict zero-token prefill capture.
+- Text reranker comparison: `cross-encoder/ettin-reranker-150m-v1`, CUDA, batch size 64, max length 512.
+- Timing note: telemetry modes were run as separate capture processes, so wall-clock includes model startup. Remote duration is the in-process row-capture timing after model construction.
+
+Results:
+
+| Mode | Rows | Remote seconds | Rows/sec remote | Wall seconds | Rows/sec wall |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Full Qwen forward | 160 | 4.31 | 37.13 | 27.24 | 5.87 |
+| Early stop at layer 7 | 160 | 1.27 | 126.24 | 23.03 | 6.95 |
+| Experimental prefix cache | 160 | 2.16 | 73.99 | 25.34 | 6.31 |
+| Ettin text reranker | 160 | n/a | n/a | 6.13 | 26.09 pairs/sec |
+
+Speed interpretation:
+
+- Layer-truncated capture is the valid optimization. It is bit-exact against full-forward capture on all 160 rows and improves in-process telemetry capture throughput by `3.40x` on this sample.
+- End-to-end wall-clock improvement is only `1.18x` in the benchmark wrapper because each mode reloads the Qwen/RMT/SAE stack. A resident production service should be priced closer to the remote-duration ratio.
+- Ettin remains faster than behavior-prefill in this unbatched per-pair telemetry path: about `4.44x` faster than layer-truncated behavior-prefill by wall-clock pairs/sec on this sample.
+
+Prefix-cache finding:
+
+- The prefix-cache diagnostic produced 10 cache entries, 10 misses, 150 hits, and no token-boundary fallbacks on SciFact, but it did not preserve the full-forward SAE feature vector.
+- Paired feature check: layer-truncated capture had max absolute difference `0.0` against full-forward on all rows; prefix-cache capture changed all 160 rows, with max absolute difference about `0.5433` and mean row max-difference about `0.1344`.
+- Therefore the prefix-cache path is not promoted. The script requires `--allow-experimental-prefix-cache` for that mode, and production reranking should use `early_stop_layer` only until cache-position/attention-mask equivalence is solved.
+
+Additional APPS note:
+
+- On an APPS smoke sample, prefix caching correctly fell back because the query alone exceeded the 128-token telemetry window before the `Candidate evidence:` boundary. This matters for long coding prompts: prompt layout and telemetry token budget determine whether candidate evidence is even inside the captured window.
+
+Batched early-stop follow-up:
+
+- Vicuna hardware can fit batched layer-7 early-stop capture, and a resident microbenchmark initially suggested batch sizes around `8-16` are the throughput sweet spot.
+- However, exactness testing showed that true batched Qwen execution changes the selected SAE telemetry even when prompts are duplicated and no padding is introduced. A duplicate-prompt batch was internally consistent, but differed from the single-prompt vector by max absolute feature difference about `2.39`.
+- The capture CLI now exposes `--optimized-batch-size` with requested default `8` for reranking-only early-stop capture, but the exact production path forces effective batch size `1` unless `--allow-nonexact-batched-prefill` is passed.
+- Verified guarded run: `/mnt/disk-1tb/activation-rag-speed-20260623/scifact-q2-c8-batch-default-guarded/` requested batch `8`, reported effective batch `1`, and matched full-forward exactly on all 16 checked rows.
+- Next optimization work should investigate whether a deterministic/batch-invariant Qwen layer-7 path can be implemented before enabling real batch `8` in production.
+- The production recommendation is documented in `docs/behavior-latent-reranker-experiment-report-20260618.md`: use a resident layer-7-only telemetry service, reduce candidates aggressively before telemetry, require equivalence gates for batching/prefix reuse, and use multi-GPU single-prompt worker sharding or student distillation until exact batch-invariant telemetry is solved.

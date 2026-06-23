@@ -24,6 +24,11 @@
     "site": "qwen.model.layers.7.resid_pre",
     "feature_count": 245,
     "capture_phase": "zero-token prefill",
+    "recommended_capture_execution_mode": "early_stop_layer",
+    "recommended_capture_command": "python scripts/capture_qwen_sae_prefill.py REQUESTS.jsonl ROWS.jsonl --capture-execution-mode early_stop_layer --optimized-batch-size 8",
+    "requested_optimized_batch_size": 8,
+    "exact_capture_effective_batch_size": 1,
+    "nonexact_batched_prefill_policy": "do not use --allow-nonexact-batched-prefill for reported reranking without paired equivalence audit",
     "aggregation": "max over prompt tokens",
     "important_limitation": "SAE-only Core245 max-prefill telemetry; not full final-token CAA/SAE selector telemetry"
   },

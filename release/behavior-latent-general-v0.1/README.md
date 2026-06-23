@@ -23,3 +23,17 @@ in `../../MODEL_CARD.md` and
 Important: `model.pt` is not a text model. It requires transformed
 query/candidate behavior telemetry as input. See `../../MODEL_CARD.md` and
 `../../README.md` for the full usage path.
+
+Telemetry capture for this artifact should use the truncated reranking path:
+
+```bash
+python scripts/capture_qwen_sae_prefill.py REQUESTS.jsonl ROWS.jsonl \
+  --capture-execution-mode early_stop_layer \
+  --optimized-batch-size 8
+```
+
+The layer-7 early-stop path preserves the Core245 signal while avoiding the
+rest of Qwen prefill. The requested optimized batch size is `8`, but exact
+production capture currently forces effective batch size `1` unless
+`--allow-nonexact-batched-prefill` is explicitly passed; do not enable non-exact
+batching for reported results without a paired equivalence audit.
